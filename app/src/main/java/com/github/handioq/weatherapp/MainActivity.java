@@ -12,9 +12,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.survivingwithandroid.weather.lib.WeatherClient;
+import com.survivingwithandroid.weather.lib.WeatherConfig;
+import com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient;
+import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
+import com.survivingwithandroid.weather.lib.exception.WeatherProviderInstantiationException;
+import com.survivingwithandroid.weather.lib.model.City;
+import com.survivingwithandroid.weather.lib.provider.openweathermap.OpenweathermapProviderType;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private TextView textView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +35,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        textView2 = (TextView) findViewById(R.id.textView2);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +55,51 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        WeatherClient.ClientBuilder builder = new WeatherClient.ClientBuilder();
+        WeatherConfig config = new WeatherConfig();
+
+        config.unitSystem = WeatherConfig.UNIT_SYSTEM.M;
+        config.lang = "en"; // If you want to use english
+        config.maxResult = 5; // Max number of cities retrieved
+        config.numDays = 6; // Max num of days in the forecast
+        config.ApiKey = "863661c7cccfddd038691c9d714a0266";
+
+        //client.updateWeatherConfig(config);
+
+        WeatherClient client = new WeatherDefaultClient();
+
+        try {
+            client = builder.attach(this)
+                    .provider(new OpenweathermapProviderType())
+                    .httpClient(com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient.class)
+                    .config(config)
+                    .build();
+        } catch (WeatherProviderInstantiationException e) {
+            e.printStackTrace();
+        }
+
+
+
+        client.searchCity("Minsk,BY", new WeatherClient.CityEventListener() {
+            @Override
+            public void onCityListRetrieved(List<City> cityList) {
+                // When the data is ready you can implement your logic here
+                textView2.setText(cityList.get(0).getName());
+            }
+
+            @Override
+            public void onWeatherError(WeatherLibException t) {
+                textView2.setText("onWeather Error");
+                t.printStackTrace();
+            }
+
+            @Override
+            public void onConnectionError(Throwable t) {
+                textView2.setText("onConnectionError");
+            }
+        });
+
     }
 
     @Override

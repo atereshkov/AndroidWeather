@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,8 +57,7 @@ public class MainActivity extends AppCompatActivity
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                Intent intent = new Intent(MainActivity.this, CityWeatherActivity.class);
-                startActivity(intent);
+                
             }
         });
 
@@ -77,6 +77,18 @@ public class MainActivity extends AppCompatActivity
 
         CitiesListViewAdapter citiesListViewAdapter = new CitiesListViewAdapter(this, android.R.layout.simple_list_item_1, items);
         citiesListView.setAdapter(citiesListViewAdapter);
+
+        citiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                //Toast.makeText(getActivity(), parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+
+                Intent selectedCityIntent = new Intent(MainActivity.this, CityWeatherActivity.class);
+                //passwordInformIntent.putExtra("password", parent.getItemAtPosition(position));
+                startActivity(selectedCityIntent);
+
+            }
+        });
 
     }
 

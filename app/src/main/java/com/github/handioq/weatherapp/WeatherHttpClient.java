@@ -14,7 +14,7 @@ public class WeatherHttpClient {
     }
 
     public byte[] getImage(String code) {
-        HttpURLConnection con = null ;
+        HttpURLConnection con = null;
         InputStream is = null;
         try {
             con = (HttpURLConnection) (new URL(IMG_URL + code + IMG_FORMAT)).openConnection();

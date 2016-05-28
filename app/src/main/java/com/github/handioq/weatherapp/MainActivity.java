@@ -87,9 +87,9 @@ public class MainActivity extends AppCompatActivity
         WeatherConfig config = new WeatherConfig();
 
         config.unitSystem = WeatherConfig.UNIT_SYSTEM.M;
-        config.lang = "en"; // If you want to use english
-        config.maxResult = 5; // Max number of cities retrieved
-        config.numDays = 6; // Max num of days in the forecast
+        config.lang = "en"; // english
+        config.maxResult = 5; // max number of cities retrieved
+        config.numDays = 6; // max num of days in the forecast
         config.ApiKey = "863661c7cccfddd038691c9d714a0266";
 
         //client.updateWeatherConfig(config);

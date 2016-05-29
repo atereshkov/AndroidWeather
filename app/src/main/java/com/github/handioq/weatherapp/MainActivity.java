@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView citiesListView;
+    private CitiesListViewAdapter citiesListViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,24 +62,30 @@ public class MainActivity extends AppCompatActivity
         citiesListView = (ListView) findViewById(R.id.citiesListView);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
-
-            }
-        });
+                    //Intent addCityIntent = new Intent(MainActivity.this, AddCityActivity.class);
+                    //startActivity(addCityIntent);
+                }
+            });
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        if (drawer != null) {
+            drawer.setDrawerListener(toggle);
+        }
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
 
         JsonLoadParams fileLoadParams = new JsonLoadParams(PathConstants.CITIES_FILE_NAME);
         ILoader<List<City>> fromFileLoader = new JsonFileLoader(fileLoadParams);
@@ -91,10 +98,8 @@ public class MainActivity extends AppCompatActivity
 
         AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
         appWeatherClient.setCities(cities);
-
-        JsonSaveParams jsonSaveParams = new JsonSaveParams(PathConstants.CITIES_FILE_NAME, cities);
-        ISaver toFileSaver = new JsonFileSaver(jsonSaveParams);
-        toFileSaver.Save();
+        //appWeatherClient.getCities().clear();
+        appWeatherClient.saveCities();
 
         WeatherClient.ClientBuilder builder = new WeatherClient.ClientBuilder();
         WeatherConfig config = new WeatherConfig();
@@ -122,7 +127,7 @@ public class MainActivity extends AppCompatActivity
         appWeatherClient.setClient(client);
         appWeatherClient.setConfig(config);
 
-        CitiesListViewAdapter citiesListViewAdapter = new CitiesListViewAdapter(this,
+        citiesListViewAdapter = new CitiesListViewAdapter(this,
                 android.R.layout.simple_list_item_1, appWeatherClient.getCities(), appWeatherClient.getClient());
         citiesListView.setAdapter(citiesListViewAdapter);
 
@@ -143,6 +148,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -194,7 +200,13 @@ public class MainActivity extends AppCompatActivity
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void onRefreshClick(MenuItem item){
+
+    }
+
 }

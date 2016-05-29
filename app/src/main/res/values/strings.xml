@@ -8,4 +8,5 @@
     <string name="title_activity_city_weather">CityWeatherActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_add_city">AddCityActivity</string>
+    <string name="title_activity_add_city_activity">AddCityActivity</string>
 </resources>

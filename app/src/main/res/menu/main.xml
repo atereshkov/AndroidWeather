@@ -7,7 +7,8 @@
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:icon="@mipmap/refresh64"
-        android:title="Refresh" />
+        android:title="Refresh"
+        android:onClick="onRefreshClick"/>
 
     <item
         android:id="@+id/action_settings"

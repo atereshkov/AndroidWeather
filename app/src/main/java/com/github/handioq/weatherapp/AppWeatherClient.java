@@ -3,6 +3,10 @@ package com.github.handioq.weatherapp;
 import android.content.Context;
 import android.util.Log;
 
+import com.github.handioq.weatherapp.constants.PathConstants;
+import com.github.handioq.weatherapp.saver.ISaver;
+import com.github.handioq.weatherapp.saver.JsonFileSaver;
+import com.github.handioq.weatherapp.saver.JsonSaveParams;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherConfig;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
@@ -76,5 +80,11 @@ public class AppWeatherClient {
         this.config = config;
     }
 
+    public void saveCities()
+    {
+        JsonSaveParams jsonSaveParams = new JsonSaveParams(PathConstants.CITIES_FILE_NAME, cities);
+        ISaver toFileSaver = new JsonFileSaver(jsonSaveParams);
+        toFileSaver.Save();
+    }
 
 }

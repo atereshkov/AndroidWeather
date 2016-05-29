@@ -1,4 +1,4 @@
-package com.github.handioq.weatherapp.loader;
+package com.github.handioq.weatherapp.constants;
 
 public class PathConstants {
 

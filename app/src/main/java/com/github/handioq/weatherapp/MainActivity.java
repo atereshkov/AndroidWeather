@@ -26,6 +26,13 @@ import android.widget.TextView;
 
 import com.github.handioq.weatherapp.activities.CityWeatherActivity;
 import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
+import com.github.handioq.weatherapp.constants.PathConstants;
+import com.github.handioq.weatherapp.loader.ILoader;
+import com.github.handioq.weatherapp.loader.JsonFileLoader;
+import com.github.handioq.weatherapp.loader.JsonLoadParams;
+import com.github.handioq.weatherapp.saver.ISaver;
+import com.github.handioq.weatherapp.saver.JsonFileSaver;
+import com.github.handioq.weatherapp.saver.JsonSaveParams;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherConfig;
 import com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient;
@@ -73,12 +80,20 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        List<City> items = new ArrayList<City>();
-        City.CityBuilder builder = new City.CityBuilder();
-        items.add(builder.name("Minsk").country("BY").build());
-        items.add(builder.name("Moscow").country("RU").build());
+        //List<City> cities = new ArrayList<City>();
+        //City.CityBuilder builder = new City.CityBuilder();
+        //cities.add(builder.name("Minsk").country("BY").id("123").build());
+        //cities.add(builder.name("Moscow").country("RU").id("2312").build());
 
-        CitiesListViewAdapter citiesListViewAdapter = new CitiesListViewAdapter(this, android.R.layout.simple_list_item_1, items);
+        JsonLoadParams fileLoadParams = new JsonLoadParams(PathConstants.CITIES_FILE_NAME);
+        ILoader<List<City>> fromFileLoader = new JsonFileLoader(fileLoadParams);
+        List<City> cities = new ArrayList<City>(fromFileLoader.load());
+
+        //JsonSaveParams jsonSaveParams = new JsonSaveParams(PathConstants.CITIES_FILE_NAME, cities);
+        //ISaver toFileSaver = new JsonFileSaver(jsonSaveParams);
+        //toFileSaver.Save();
+
+        CitiesListViewAdapter citiesListViewAdapter = new CitiesListViewAdapter(this, android.R.layout.simple_list_item_1, cities);
         citiesListView.setAdapter(citiesListViewAdapter);
 
         citiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

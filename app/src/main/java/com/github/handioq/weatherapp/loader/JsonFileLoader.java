@@ -2,6 +2,7 @@ package com.github.handioq.weatherapp.loader;
 
 import android.os.Environment;
 
+import com.github.handioq.weatherapp.constants.PathConstants;
 import com.survivingwithandroid.weather.lib.model.City;
 
 import org.json.JSONArray;

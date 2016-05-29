@@ -80,20 +80,50 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //List<City> cities = new ArrayList<City>();
-        //City.CityBuilder builder = new City.CityBuilder();
-        //cities.add(builder.name("Minsk").country("BY").id("123").build());
-        //cities.add(builder.name("Moscow").country("RU").id("2312").build());
-
         JsonLoadParams fileLoadParams = new JsonLoadParams(PathConstants.CITIES_FILE_NAME);
         ILoader<List<City>> fromFileLoader = new JsonFileLoader(fileLoadParams);
         List<City> cities = new ArrayList<City>(fromFileLoader.load());
 
-        //JsonSaveParams jsonSaveParams = new JsonSaveParams(PathConstants.CITIES_FILE_NAME, cities);
-        //ISaver toFileSaver = new JsonFileSaver(jsonSaveParams);
-        //toFileSaver.Save();
+        //List<City> cities = new ArrayList<City>();
+        //City.CityBuilder builder1 = new City.CityBuilder();
+        //cities.add(builder1.name("Minsk").country("BY").id("625144").build());
+        //cities.add(builder1.name("New York City").country("US").id("5128581").build());
 
-        CitiesListViewAdapter citiesListViewAdapter = new CitiesListViewAdapter(this, android.R.layout.simple_list_item_1, cities);
+        AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
+        appWeatherClient.setCities(cities);
+
+        JsonSaveParams jsonSaveParams = new JsonSaveParams(PathConstants.CITIES_FILE_NAME, cities);
+        ISaver toFileSaver = new JsonFileSaver(jsonSaveParams);
+        toFileSaver.Save();
+
+        WeatherClient.ClientBuilder builder = new WeatherClient.ClientBuilder();
+        WeatherConfig config = new WeatherConfig();
+
+        config.unitSystem = WeatherConfig.UNIT_SYSTEM.M;
+        config.lang = "en"; // english
+        config.maxResult = 5; // max number of cities retrieved
+        config.numDays = 6; // max num of days in the forecast
+        config.ApiKey = "863661c7cccfddd038691c9d714a0266";
+
+        //client.updateWeatherConfig(config);
+
+        WeatherClient client = new WeatherDefaultClient();
+
+        try {
+            client = builder.attach(this)
+                    .provider(new OpenweathermapProviderType()) // use openweathermapAPI
+                    .httpClient(com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient.class)
+                    .config(config)
+                    .build();
+        } catch (WeatherProviderInstantiationException e) {
+            e.printStackTrace();
+        }
+
+        appWeatherClient.setClient(client);
+        appWeatherClient.setConfig(config);
+
+        CitiesListViewAdapter citiesListViewAdapter = new CitiesListViewAdapter(this,
+                android.R.layout.simple_list_item_1, appWeatherClient.getCities(), appWeatherClient.getClient());
         citiesListView.setAdapter(citiesListViewAdapter);
 
         citiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

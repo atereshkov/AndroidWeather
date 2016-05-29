@@ -1,12 +1,21 @@
 package com.github.handioq.weatherapp;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherConfig;
+import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
+import com.survivingwithandroid.weather.lib.model.City;
 import com.survivingwithandroid.weather.lib.model.CurrentWeather;
 import com.survivingwithandroid.weather.lib.model.WeatherForecast;
+import com.survivingwithandroid.weather.lib.request.WeatherRequest;
 
+import java.util.List;
+
+/**
+ * Singleton for using cities, weather and forecasts around application.
+ */
 public class AppWeatherClient {
 
     private static AppWeatherClient me;
@@ -15,6 +24,7 @@ public class AppWeatherClient {
     private WeatherConfig config;
     private WeatherForecast forecast;
     private CurrentWeather weather;
+    private List<City> cities;
 
     private AppWeatherClient() {
     }
@@ -41,4 +51,30 @@ public class AppWeatherClient {
     public void setForecast(WeatherForecast forecast) {
         this.forecast = forecast;
     }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
+    public WeatherClient getClient() {
+        return client;
+    }
+
+    public void setClient(WeatherClient client) {
+        this.client = client;
+    }
+
+    public WeatherConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(WeatherConfig config) {
+        this.config = config;
+    }
+
+
 }

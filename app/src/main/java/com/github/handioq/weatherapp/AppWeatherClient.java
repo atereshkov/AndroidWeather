@@ -14,7 +14,6 @@ public class AppWeatherClient {
     private WeatherClient client;
     private WeatherConfig config;
     private WeatherForecast forecast;
-
     private CurrentWeather weather;
 
     private AppWeatherClient() {

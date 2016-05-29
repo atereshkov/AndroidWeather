@@ -69,7 +69,6 @@ public class CityWeatherActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -87,6 +86,11 @@ public class CityWeatherActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if (id == android.R.id.home)
+        {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -163,4 +167,7 @@ public class CityWeatherActivity extends AppCompatActivity {
             return null;
         }
     }
+
+
+
 }

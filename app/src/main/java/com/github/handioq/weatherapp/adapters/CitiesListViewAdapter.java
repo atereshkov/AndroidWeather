@@ -55,8 +55,7 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
             TextView cityWeather = (TextView) view.findViewById(R.id.cityWeather);
 
             cityTitle.setText(city.getName() + ", " + city.getCountry());
-            //cityWeather.setText();
-
+            cityWeather.setText("19 °С");
         }
 
         return view;

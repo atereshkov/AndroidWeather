@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -133,19 +134,28 @@ public class CityWeatherActivity extends AppCompatActivity {
            //  textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER))
             // + AppWeatherClient.getInstance().getSelectedCity());
 
-            RelativeLayout relativeLayout1 = (RelativeLayout) rootView.findViewById(R.id.relativeLayout1);
-            RelativeLayout relativeLayout2 = (RelativeLayout) rootView.findViewById(R.id.relativeLayout2);
+            LinearLayout relativeLayout1 = (LinearLayout) rootView.findViewById(R.id.currentWeather);
+            LinearLayout relativeLayout2 = (LinearLayout) rootView.findViewById(R.id.threeHourForecast);
+            LinearLayout relativeLayout3 = (LinearLayout) rootView.findViewById(R.id.fiveDaysForecast);
 
             switch(getArguments().getInt(ARG_SECTION_NUMBER)) // replace for hashmap
             {
                 case 1:
                     relativeLayout1.setVisibility(View.VISIBLE);
                     relativeLayout2.setVisibility(View.GONE);
+                    relativeLayout3.setVisibility(View.GONE);
                     break;
 
                 case 2:
-                    relativeLayout2.setVisibility(View.VISIBLE);
                     relativeLayout1.setVisibility(View.GONE);
+                    relativeLayout2.setVisibility(View.VISIBLE);
+                    relativeLayout3.setVisibility(View.GONE);
+                    break;
+
+                case 3:
+                    relativeLayout1.setVisibility(View.GONE);
+                    relativeLayout2.setVisibility(View.GONE);
+                    relativeLayout3.setVisibility(View.VISIBLE);
                     break;
 
             }

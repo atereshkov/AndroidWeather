@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <!--
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
@@ -40,7 +41,25 @@
             android:text="layout2"/>
 
     </RelativeLayout>
+    -->
 
+    <include
+        android:id="@+id/currentWeather"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/current_weather_layout" />
+
+    <include
+        android:id="@+id/fiveDaysForecast"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/five_days_forecast_layout" />
+
+    <include
+        android:id="@+id/threeHourForecast"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/three_hour_forecast_layout" />
 
 
 </RelativeLayout>

@@ -23,6 +23,7 @@ import com.github.handioq.weatherapp.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.WeatherPagerAdapter;
 import com.survivingwithandroid.weather.lib.model.CurrentWeather;
+import com.survivingwithandroid.weather.lib.model.WeatherForecast;
 
 import java.util.List;
 import java.util.Vector;
@@ -52,15 +53,14 @@ public class CityWeatherActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        // Create the adapter that will return a fragment for each of the three
+        // http://openweathermap.org/price provides a free plan with 5 days / 3 hour forecast API, so...
         List<Fragment> fragments = new Vector<Fragment>();
-        fragments.add(Fragment.instantiate(this, CurrentWeatherFragment.class.getName()));
-        fragments.add(Fragment.instantiate(this, ThreeHoursForecastFragment.class.getName()));
-        fragments.add(Fragment.instantiate(this, FiveDaysForecastFragment.class.getName()));
-        mWeatherPagerAdapter = new WeatherPagerAdapter(getSupportFragmentManager(), fragments);
+        fragments.add(Fragment.instantiate(this, CurrentWeatherFragment.class.getName())); // for current weather
+        fragments.add(Fragment.instantiate(this, ThreeHoursForecastFragment.class.getName())); // for three hours forecast
+        fragments.add(Fragment.instantiate(this, FiveDaysForecastFragment.class.getName())); // for 5 days forecast
+        mWeatherPagerAdapter = new WeatherPagerAdapter(getSupportFragmentManager(), fragments, this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

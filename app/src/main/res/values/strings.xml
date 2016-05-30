@@ -9,4 +9,10 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_add_city">AddCityActivity</string>
     <string name="title_activity_add_city_activity">AddCityActivity</string>
+
+    <!-- strings for WeatherPagerAdapter and title of pages -->
+    <string name="page_title_now">Now</string>
+    <string name="page_title_three_hours">3 hours</string>
+    <string name="page_title_five_days">5 days</string>
+
 </resources>

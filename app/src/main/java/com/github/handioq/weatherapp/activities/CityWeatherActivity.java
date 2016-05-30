@@ -136,16 +136,18 @@ public class CityWeatherActivity extends AppCompatActivity {
             RelativeLayout relativeLayout1 = (RelativeLayout) rootView.findViewById(R.id.relativeLayout1);
             RelativeLayout relativeLayout2 = (RelativeLayout) rootView.findViewById(R.id.relativeLayout2);
 
-            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1)
+            switch(getArguments().getInt(ARG_SECTION_NUMBER)) // replace for hashmap
             {
-                relativeLayout1.setVisibility(View.VISIBLE);
-                relativeLayout2.setVisibility(View.GONE);
-            }
+                case 1:
+                    relativeLayout1.setVisibility(View.VISIBLE);
+                    relativeLayout2.setVisibility(View.GONE);
+                    break;
 
-            if (getArguments().getInt(ARG_SECTION_NUMBER) == 2)
-            {
-                relativeLayout2.setVisibility(View.VISIBLE);
-                relativeLayout1.setVisibility(View.GONE);
+                case 2:
+                    relativeLayout2.setVisibility(View.VISIBLE);
+                    relativeLayout1.setVisibility(View.GONE);
+                    break;
+
             }
 
             return rootView;

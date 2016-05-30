@@ -87,19 +87,19 @@ public class MainActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-        JsonLoadParams fileLoadParams = new JsonLoadParams(PathConstants.CITIES_FILE_NAME);
-        ILoader<List<City>> fromFileLoader = new JsonFileLoader(fileLoadParams);
-        List<City> cities = new ArrayList<City>(fromFileLoader.load());
-
         //List<City> cities = new ArrayList<City>();
         //City.CityBuilder builder1 = new City.CityBuilder();
         //cities.add(builder1.name("Minsk").country("BY").id("625144").build());
         //cities.add(builder1.name("New York City").country("US").id("5128581").build());
 
-        AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
+        JsonLoadParams fileLoadParams = new JsonLoadParams(PathConstants.CITIES_FILE_NAME);
+        ILoader<List<City>> fromFileLoader = new JsonFileLoader(fileLoadParams);
+        List<City> cities = new ArrayList<City>(fromFileLoader.load());
+
+        final AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
         appWeatherClient.setCities(cities);
         //appWeatherClient.getCities().clear();
-        appWeatherClient.saveCities();
+        //appWeatherClient.saveCities();
 
         WeatherClient.ClientBuilder builder = new WeatherClient.ClientBuilder();
         WeatherConfig config = new WeatherConfig();
@@ -137,8 +137,9 @@ public class MainActivity extends AppCompatActivity
                 //Toast.makeText(getActivity(), parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
 
                 Intent selectedCityIntent = new Intent(MainActivity.this, CityWeatherActivity.class);
-                //passwordInformIntent.putExtra("password", parent.getItemAtPosition(position));
+                //selectedCityIntent.putExtra("selectedCity", parent.getItemAtPosition(position).toString());
                 startActivity(selectedCityIntent);
+                appWeatherClient.setSelectedCity(appWeatherClient.getCities().get(position));
 
             }
         });

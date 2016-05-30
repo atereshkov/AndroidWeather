@@ -83,7 +83,6 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
             });
 
             cityTitle.setText(city.getName() + ", " + city.getCountry());
-            //cityWeather.setText("19 °С");
         }
 
         return view;

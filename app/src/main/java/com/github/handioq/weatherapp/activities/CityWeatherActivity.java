@@ -1,5 +1,7 @@
 package com.github.handioq.weatherapp.activities;
 
+import android.content.Intent;
+import android.opengl.Visibility;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,8 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.handioq.weatherapp.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 
 public class CityWeatherActivity extends AppCompatActivity {
@@ -125,8 +129,25 @@ public class CityWeatherActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_city_weather, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            // TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+           //  textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER))
+            // + AppWeatherClient.getInstance().getSelectedCity());
+
+            RelativeLayout relativeLayout1 = (RelativeLayout) rootView.findViewById(R.id.relativeLayout1);
+            RelativeLayout relativeLayout2 = (RelativeLayout) rootView.findViewById(R.id.relativeLayout2);
+
+            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1)
+            {
+                relativeLayout1.setVisibility(View.VISIBLE);
+                relativeLayout2.setVisibility(View.GONE);
+            }
+
+            if (getArguments().getInt(ARG_SECTION_NUMBER) == 2)
+            {
+                relativeLayout2.setVisibility(View.VISIBLE);
+                relativeLayout1.setVisibility(View.GONE);
+            }
+
             return rootView;
         }
     }

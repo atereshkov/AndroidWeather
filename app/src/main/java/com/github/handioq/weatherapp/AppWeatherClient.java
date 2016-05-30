@@ -29,6 +29,7 @@ public class AppWeatherClient {
     private WeatherForecast forecast;
     private CurrentWeather weather;
     private List<City> cities;
+    private City selectedCity;
 
     private AppWeatherClient() {
     }
@@ -87,4 +88,11 @@ public class AppWeatherClient {
         toFileSaver.Save();
     }
 
+    public City getSelectedCity() {
+        return selectedCity;
+    }
+
+    public void setSelectedCity(City selectedCity) {
+        this.selectedCity = selectedCity;
+    }
 }

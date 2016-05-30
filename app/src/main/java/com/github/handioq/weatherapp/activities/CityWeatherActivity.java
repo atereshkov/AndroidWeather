@@ -19,12 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.github.handioq.weatherapp.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
+import com.github.handioq.weatherapp.adapters.WeatherPagerAdapter;
+import com.survivingwithandroid.weather.lib.model.CurrentWeather;
+
+import java.util.List;
+import java.util.Vector;
 
 public class CityWeatherActivity extends AppCompatActivity {
 
@@ -36,7 +37,8 @@ public class CityWeatherActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private WeatherPagerAdapter mWeatherPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -52,25 +54,38 @@ public class CityWeatherActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        List<Fragment> fragments = new Vector<Fragment>();
+        fragments.add(Fragment.instantiate(this, CurrentWeatherFragment.class.getName()));
+        fragments.add(Fragment.instantiate(this, ThreeHoursForecastFragment.class.getName()));
+        fragments.add(Fragment.instantiate(this, FiveDaysForecastFragment.class.getName()));
+        mWeatherPagerAdapter = new WeatherPagerAdapter(getSupportFragmentManager(), fragments);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        if (mViewPager != null) {
+            mViewPager.setAdapter(mWeatherPagerAdapter);
+        }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(mViewPager);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+        }
 
     }
 
@@ -100,107 +115,5 @@ public class CityWeatherActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_city_weather, container, false);
-            // TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-           //  textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER))
-            // + AppWeatherClient.getInstance().getSelectedCity());
-
-            LinearLayout relativeLayout1 = (LinearLayout) rootView.findViewById(R.id.currentWeather);
-            LinearLayout relativeLayout2 = (LinearLayout) rootView.findViewById(R.id.threeHourForecast);
-            LinearLayout relativeLayout3 = (LinearLayout) rootView.findViewById(R.id.fiveDaysForecast);
-
-            switch(getArguments().getInt(ARG_SECTION_NUMBER)) // replace for hashmap
-            {
-                case 1:
-                    relativeLayout1.setVisibility(View.VISIBLE);
-                    relativeLayout2.setVisibility(View.GONE);
-                    relativeLayout3.setVisibility(View.GONE);
-                    break;
-
-                case 2:
-                    relativeLayout1.setVisibility(View.GONE);
-                    relativeLayout2.setVisibility(View.VISIBLE);
-                    relativeLayout3.setVisibility(View.GONE);
-                    break;
-
-                case 3:
-                    relativeLayout1.setVisibility(View.GONE);
-                    relativeLayout2.setVisibility(View.GONE);
-                    relativeLayout3.setVisibility(View.VISIBLE);
-                    break;
-
-            }
-
-            return rootView;
-        }
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
-        }
-    }
-
-
 
 }

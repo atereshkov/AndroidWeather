@@ -4,17 +4,23 @@ import android.content.Context;
 import android.util.Log;
 
 import com.github.handioq.weatherapp.constants.PathConstants;
+import com.github.handioq.weatherapp.loader.ILoader;
+import com.github.handioq.weatherapp.loader.JsonFileLoader;
+import com.github.handioq.weatherapp.loader.JsonLoadParams;
+import com.github.handioq.weatherapp.models.CityWeather;
 import com.github.handioq.weatherapp.saver.ISaver;
 import com.github.handioq.weatherapp.saver.JsonFileSaver;
 import com.github.handioq.weatherapp.saver.JsonSaveParams;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherConfig;
+import com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
 import com.survivingwithandroid.weather.lib.model.CurrentWeather;
 import com.survivingwithandroid.weather.lib.model.WeatherForecast;
 import com.survivingwithandroid.weather.lib.request.WeatherRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,8 +41,9 @@ public class AppWeatherClient {
     }
 
     public static AppWeatherClient getInstance() {
-        if (me == null)
+        if (me == null) {
             me = new AppWeatherClient();
+        }
 
         return me;
     }
@@ -88,6 +95,13 @@ public class AppWeatherClient {
         toFileSaver.Save();
     }
 
+    public void loadCities()
+    {
+        JsonLoadParams fileLoadParams = new JsonLoadParams(PathConstants.CITIES_FILE_NAME);
+        ILoader<List<City>> fromFileLoader = new JsonFileLoader(fileLoadParams);
+        cities = fromFileLoader.load();
+    }
+
     public City getSelectedCity() {
         return selectedCity;
     }
@@ -95,4 +109,34 @@ public class AppWeatherClient {
     public void setSelectedCity(City selectedCity) {
         this.selectedCity = selectedCity;
     }
+
+    /*
+    public void updateWeather()
+    {
+        final List<CityWeather> added = new ArrayList<CityWeather>();
+        for (final City city : cities)
+        {
+            client.getCurrentCondition(new WeatherRequest(city.getId()), new WeatherClient.WeatherEventListener() {
+                @Override public void onWeatherRetrieved(CurrentWeather currentWeather) {
+                    float currentTemp = currentWeather.weather.temperature.getTemp();
+                    Log.d("WL", "City ["+currentWeather.weather.location.getCity()+"] Current temp ["+currentTemp+"]");
+
+                    added.add(new CityWeather(city, currentWeather));
+                    InterimData.getInstance().setWeatherList(added);
+                }
+
+                @Override public void onWeatherError(WeatherLibException e) {
+                    Log.d("WL", "Weather Error - parsing data");
+                    e.printStackTrace();
+                }
+
+                @Override public void onConnectionError(Throwable throwable) {
+                    Log.d("WL", "Connection error");
+                    throwable.printStackTrace();
+                }
+            });
+        }
+    }
+    */
+
 }

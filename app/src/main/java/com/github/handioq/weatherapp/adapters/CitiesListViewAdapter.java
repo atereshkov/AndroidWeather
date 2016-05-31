@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.handioq.weatherapp.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
@@ -18,6 +19,7 @@ import com.survivingwithandroid.weather.lib.model.City;
 import com.survivingwithandroid.weather.lib.model.CurrentWeather;
 import com.survivingwithandroid.weather.lib.request.WeatherRequest;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,5 +89,4 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
 
         return view;
     }
-
 }

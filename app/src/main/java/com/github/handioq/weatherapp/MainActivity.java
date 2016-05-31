@@ -30,6 +30,7 @@ import com.github.handioq.weatherapp.constants.PathConstants;
 import com.github.handioq.weatherapp.loader.ILoader;
 import com.github.handioq.weatherapp.loader.JsonFileLoader;
 import com.github.handioq.weatherapp.loader.JsonLoadParams;
+import com.github.handioq.weatherapp.models.CityWeather;
 import com.github.handioq.weatherapp.saver.ISaver;
 import com.github.handioq.weatherapp.saver.JsonFileSaver;
 import com.github.handioq.weatherapp.saver.JsonSaveParams;
@@ -92,14 +93,7 @@ public class MainActivity extends AppCompatActivity
         //cities.add(builder1.name("Minsk").country("BY").id("625144").build());
         //cities.add(builder1.name("New York City").country("US").id("5128581").build());
 
-        JsonLoadParams fileLoadParams = new JsonLoadParams(PathConstants.CITIES_FILE_NAME);
-        ILoader<List<City>> fromFileLoader = new JsonFileLoader(fileLoadParams);
-        List<City> cities = new ArrayList<City>(fromFileLoader.load());
-
         final AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
-        appWeatherClient.setCities(cities);
-        //appWeatherClient.getCities().clear();
-        //appWeatherClient.saveCities();
 
         WeatherClient.ClientBuilder builder = new WeatherClient.ClientBuilder();
         WeatherConfig config = new WeatherConfig();
@@ -109,8 +103,6 @@ public class MainActivity extends AppCompatActivity
         config.maxResult = 5; // max number of cities retrieved
         config.numDays = 6; // max num of days in the forecast
         config.ApiKey = "863661c7cccfddd038691c9d714a0266";
-
-        //client.updateWeatherConfig(config);
 
         WeatherClient client = new WeatherDefaultClient();
 
@@ -126,6 +118,7 @@ public class MainActivity extends AppCompatActivity
 
         appWeatherClient.setClient(client);
         appWeatherClient.setConfig(config);
+        appWeatherClient.loadCities();
 
         citiesListViewAdapter = new CitiesListViewAdapter(this,
                 android.R.layout.simple_list_item_1, appWeatherClient.getCities(), appWeatherClient.getClient());
@@ -207,7 +200,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onRefreshClick(MenuItem item){
-
+        citiesListViewAdapter.notifyDataSetChanged(); // listview will be updated
     }
 
 }

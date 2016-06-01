@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView citiesListView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private CitiesListViewAdapter citiesListViewAdapter;
     private AnimatingRefreshButtonManager mRefreshButtonManager;
 
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         citiesListView = (ListView) findViewById(R.id.citiesListView);
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null) {
@@ -139,8 +144,27 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
     }
+
+    SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener(){
+
+        @Override
+        public void onRefresh() {
+
+            mRefreshButtonManager.onRefreshBeginning();
+            citiesListViewAdapter.notifyDataSetChanged();  // citiesListView will be updated
+            mRefreshButtonManager.onRefreshComplete();
+
+            //simulate doing update for 1000 ms
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
+            }, 1000);
+        }};
 
     @Override
     public void onBackPressed() {

@@ -35,6 +35,7 @@ import com.github.handioq.weatherapp.models.CityWeather;
 import com.github.handioq.weatherapp.saver.ISaver;
 import com.github.handioq.weatherapp.saver.JsonFileSaver;
 import com.github.handioq.weatherapp.saver.JsonSaveParams;
+import com.github.handioq.weatherapp.utils.AnimatingRefreshButtonManager;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherConfig;
 import com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity
 
     private ListView citiesListView;
     private CitiesListViewAdapter citiesListViewAdapter;
+    private AnimatingRefreshButtonManager mRefreshButtonManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +158,9 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
+        MenuItem refreshItem = menu.findItem(R.id.action_refresh);
+        mRefreshButtonManager = new AnimatingRefreshButtonManager(this, refreshItem);
+
         return true;
     }
 
@@ -201,9 +206,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onRefreshClick(MenuItem item){
-        //mRefreshButtonManager.onRefreshBeginning();
+        mRefreshButtonManager.onRefreshBeginning();
         citiesListViewAdapter.notifyDataSetChanged();  // citiesListView will be updated
-
+        mRefreshButtonManager.onRefreshComplete();
     }
 
 }

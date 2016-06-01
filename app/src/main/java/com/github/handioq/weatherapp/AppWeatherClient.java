@@ -110,33 +110,4 @@ public class AppWeatherClient {
         this.selectedCity = selectedCity;
     }
 
-    /*
-    public void updateWeather()
-    {
-        final List<CityWeather> added = new ArrayList<CityWeather>();
-        for (final City city : cities)
-        {
-            client.getCurrentCondition(new WeatherRequest(city.getId()), new WeatherClient.WeatherEventListener() {
-                @Override public void onWeatherRetrieved(CurrentWeather currentWeather) {
-                    float currentTemp = currentWeather.weather.temperature.getTemp();
-                    Log.d("WL", "City ["+currentWeather.weather.location.getCity()+"] Current temp ["+currentTemp+"]");
-
-                    added.add(new CityWeather(city, currentWeather));
-                    InterimData.getInstance().setWeatherList(added);
-                }
-
-                @Override public void onWeatherError(WeatherLibException e) {
-                    Log.d("WL", "Weather Error - parsing data");
-                    e.printStackTrace();
-                }
-
-                @Override public void onConnectionError(Throwable throwable) {
-                    Log.d("WL", "Connection error");
-                    throwable.printStackTrace();
-                }
-            });
-        }
-    }
-    */
-
 }

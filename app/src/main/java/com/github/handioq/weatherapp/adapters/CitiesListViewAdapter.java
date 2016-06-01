@@ -13,6 +13,14 @@ import android.widget.TextView;
 
 import com.github.handioq.weatherapp.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
+import com.github.handioq.weatherapp.WeatherHttpClient;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
@@ -27,6 +35,7 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
 
     private List<City> items;
     private WeatherClient weatherClient;
+    private Context context;
 
     public CitiesListViewAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -36,6 +45,7 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
         super(context, resource, items);
         this.items = items;
         this.weatherClient = weatherClient;
+        this.context = context;
     }
 
     /**
@@ -61,9 +71,13 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
 
         if (city != null)
         {
-            //ImageView cityImage = (ImageView) view.findViewById(R.id.cityImage);
+            final ImageView cityImage = (ImageView) view.findViewById(R.id.cityImage);
             TextView cityTitle = (TextView) view.findViewById(R.id.cityTitle);
             final TextView cityWeather = (TextView) view.findViewById(R.id.cityWeather);
+
+            final ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+            final WeatherHttpClient weatherHttpClient = new WeatherHttpClient();
 
             weatherClient.getCurrentCondition(new WeatherRequest(city.getId()), new WeatherClient.WeatherEventListener() {
                 @Override public void onWeatherRetrieved(CurrentWeather currentWeather) {
@@ -71,6 +85,9 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
                     Log.d("WL", "City ["+currentWeather.weather.location.getCity()+"] Current temp ["+currentTemp+"]");
 
                     cityWeather.setText(Math.round((currentWeather.weather.temperature.getTemp())) + "°С");
+
+                    imageLoader.displayImage(weatherHttpClient.getQueryImageURL(currentWeather.weather.currentCondition.getIcon()),
+                            cityImage); // can be replaced for complete usage, if need it
                 }
 
                 @Override public void onWeatherError(WeatherLibException e) {

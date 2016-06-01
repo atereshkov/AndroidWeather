@@ -13,35 +13,8 @@ public class WeatherHttpClient {
     public WeatherHttpClient() {
     }
 
-    public byte[] getImage(String code) {
-        HttpURLConnection con = null;
-        InputStream is = null;
-        try {
-            con = (HttpURLConnection) (new URL(IMG_URL + code + IMG_FORMAT)).openConnection();
-            con.setRequestMethod("GET");
-            con.setDoInput(true);
-            con.setDoOutput(true);
-            con.connect();
-
-            is = con.getInputStream();
-            byte[] buffer = new byte[1024];
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            while (is.read(buffer) != -1)
-                baos.write(buffer);
-
-            return baos.toByteArray();
-        }
-        catch(Throwable t) {
-            t.printStackTrace();
-        }
-        finally {
-            try { is.close(); } catch(Throwable t) {}
-            try { con.disconnect(); } catch(Throwable t) {}
-        }
-
-        return null;
-
+    public String getQueryImageURL(String icon) {
+        return IMG_URL + icon + IMG_FORMAT;
     }
 
 }

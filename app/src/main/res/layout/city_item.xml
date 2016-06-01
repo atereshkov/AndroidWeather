@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/ivImage"
+        android:id="@+id/cityImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@mipmap/ic_launcher" />

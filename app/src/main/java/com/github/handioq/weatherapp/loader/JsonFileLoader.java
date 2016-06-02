@@ -27,7 +27,8 @@ public class JsonFileLoader implements ILoader<List<City>> {
     public List<City> load() {
         List<City> cities = new ArrayList<>();
 
-        String jsonStr = readFile(PathConstants.APP_DIRECTORY, PathConstants.CITIES_FILE_NAME);
+        StringFileLoader stringFileLoader = new StringFileLoader(PathConstants.APP_DIRECTORY, PathConstants.CITIES_FILE_NAME);
+        String jsonStr = stringFileLoader.load();
 
         try {
             JSONObject jsonObject = new JSONObject(jsonStr);
@@ -51,26 +52,4 @@ public class JsonFileLoader implements ILoader<List<City>> {
         return cities;
     }
 
-
-    private String readFile(String directory, String filename)
-    {
-        StringBuilder text = new StringBuilder();
-        try {
-            File sdcard = Environment.getExternalStorageDirectory();
-            File file = new File(sdcard.getAbsolutePath() + directory, filename);
-
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = br.readLine()) != null)
-            {
-                text.append(line);
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return text.toString();
-    }
 }

@@ -17,4 +17,6 @@
 
     <string name="degree_celsius">°С</string>
 
+    <string name="refresh_error_nointernet">Error updating. Verify your connection to the Internet!</string>
+
 </resources>

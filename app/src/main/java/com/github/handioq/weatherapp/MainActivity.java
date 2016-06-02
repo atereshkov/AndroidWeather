@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.handioq.weatherapp.activities.CityWeatherActivity;
 import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
@@ -36,6 +37,7 @@ import com.github.handioq.weatherapp.saver.ISaver;
 import com.github.handioq.weatherapp.saver.JsonFileSaver;
 import com.github.handioq.weatherapp.saver.JsonSaveParams;
 import com.github.handioq.weatherapp.utils.AnimatingRefreshButtonManager;
+import com.github.handioq.weatherapp.utils.ConnectionDetector;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherConfig;
 import com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient;
@@ -151,7 +153,7 @@ public class MainActivity extends AppCompatActivity
         public void onRefresh() {
 
             mRefreshButtonManager.onRefreshBeginning();
-            citiesListViewAdapter.notifyDataSetChanged();  // citiesListView will be updated
+            refreshCitiesListView();
             mRefreshButtonManager.onRefreshComplete();
 
             //simulate doing update for 1000 ms
@@ -230,8 +232,21 @@ public class MainActivity extends AppCompatActivity
 
     public void onRefreshClick(MenuItem item){
         mRefreshButtonManager.onRefreshBeginning();
-        citiesListViewAdapter.notifyDataSetChanged();  // citiesListView will be updated
+        refreshCitiesListView();
         mRefreshButtonManager.onRefreshComplete();
+    }
+
+    private void refreshCitiesListView()
+    {
+        ConnectionDetector connectionDetector = new ConnectionDetector(getApplicationContext());
+        if (!connectionDetector.checkInternetConnection())
+        {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.refresh_error_nointernet), Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            citiesListViewAdapter.notifyDataSetChanged();  // citiesListView will be updated
+        }
     }
 
 }

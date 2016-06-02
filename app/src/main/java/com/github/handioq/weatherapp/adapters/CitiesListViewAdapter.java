@@ -1,8 +1,7 @@
 package com.github.handioq.weatherapp.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,31 +9,26 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.github.handioq.weatherapp.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.WeatherHttpClient;
 import com.github.handioq.weatherapp.constants.PathConstants;
-import com.github.handioq.weatherapp.saver.CityWeatherSaveParams;
-import com.github.handioq.weatherapp.saver.CityWeatherSaver;
+import com.github.handioq.weatherapp.loader.CurrentCityWeatherLoadParams;
+import com.github.handioq.weatherapp.loader.CurrentCityWeatherLoader;
+import com.github.handioq.weatherapp.loader.ILoader;
+import com.github.handioq.weatherapp.models.CurrentCityWeather;
+import com.github.handioq.weatherapp.saver.CurrentCityWeatherSaveParams;
+import com.github.handioq.weatherapp.saver.CurrentCityWeatherSaver;
 import com.github.handioq.weatherapp.saver.ISaver;
-import com.github.handioq.weatherapp.saver.JsonFileSaver;
-import com.github.handioq.weatherapp.saver.JsonSaveParams;
-import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
 import com.survivingwithandroid.weather.lib.model.CurrentWeather;
 import com.survivingwithandroid.weather.lib.request.WeatherRequest;
 
-import java.security.acl.Group;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CitiesListViewAdapter extends ArrayAdapter<City> {
@@ -78,7 +72,7 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
         if (city != null)
         {
             final ImageView cityImage = (ImageView) view.findViewById(R.id.cityImage);
-            TextView cityTitle = (TextView) view.findViewById(R.id.cityTitle);
+            final TextView cityTitle = (TextView) view.findViewById(R.id.cityTitle);
             final TextView cityWeather = (TextView) view.findViewById(R.id.cityWeather);
 
             final ImageLoader imageLoader = ImageLoader.getInstance();
@@ -94,25 +88,39 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
 
                     cityWeather.setText(Math.round(currentTemp) + context.getResources().getString(R.string.degree_celsius));
                     imageLoader.displayImage(weatherHttpClient.getQueryImageURL(iconID), cityImage); // can be replaced for complete usage, if need it
+                    cityTitle.setText(city.getName() + ", " + city.getCountry());
 
-                    CityWeatherSaveParams cityWeatherSaveParams = new CityWeatherSaveParams(city.getName(), city, currentTemp, iconID);
-                    ISaver toFileSaver = new CityWeatherSaver(cityWeatherSaveParams);
+                    CurrentCityWeatherSaveParams currentCityWeatherSaveParams =
+                            new CurrentCityWeatherSaveParams(new CurrentCityWeather(city.getName(), city.getCountry(), currentTemp, iconID));
+                    ISaver toFileSaver = new CurrentCityWeatherSaver(currentCityWeatherSaveParams);
                     toFileSaver.Save(); // save cities data to file for get it when no connection available
                 }
 
                 @Override public void onWeatherError(WeatherLibException e) {
                     Log.d("WL", "Weather Error - parsing data");
                     e.printStackTrace();
-                    // load city weather data from file
                 }
 
                 @Override public void onConnectionError(Throwable throwable) {
-                    Log.d("WL", "Connection error");
+                    Log.d("WL", "Connection error"); // if no connection to the internet
                     throwable.printStackTrace();
+                    // load city weather data from file
+
+                    CurrentCityWeather currentCityWeather = new CurrentCityWeather(context);
+
+                    CurrentCityWeatherLoadParams currentCityWeatherLoadParams =
+                            new CurrentCityWeatherLoadParams(city.getName() + "_" + city.getCountry() + PathConstants.JSON_DEFAULT_EXT);
+                    ILoader<CurrentCityWeather> fromFileLoader = new CurrentCityWeatherLoader(currentCityWeatherLoadParams);
+                    currentCityWeather = fromFileLoader.load();
+
+                    cityWeather.setText(Math.round(currentCityWeather.getCurrentTemp()) + context.getResources().getString(R.string.degree_celsius));
+                    cityTitle.setText(currentCityWeather.getCityName() + ", " + currentCityWeather.getCountry());
+
+                    cityImage.setImageDrawable(currentCityWeather.getIconFromDrawable(context));
                 }
             });
 
-            cityTitle.setText(city.getName() + ", " + city.getCountry());
+
         }
 
         return view;

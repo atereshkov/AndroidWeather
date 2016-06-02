@@ -14,6 +14,12 @@ import android.widget.TextView;
 import com.github.handioq.weatherapp.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.WeatherHttpClient;
+import com.github.handioq.weatherapp.constants.PathConstants;
+import com.github.handioq.weatherapp.saver.CityWeatherSaveParams;
+import com.github.handioq.weatherapp.saver.CityWeatherSaver;
+import com.github.handioq.weatherapp.saver.ISaver;
+import com.github.handioq.weatherapp.saver.JsonFileSaver;
+import com.github.handioq.weatherapp.saver.JsonSaveParams;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -67,7 +73,7 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
             view = vi.inflate(R.layout.city_item, null);
         }
 
-        City city = getItem(position);
+        final City city = getItem(position);
 
         if (city != null)
         {
@@ -82,17 +88,22 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
             weatherClient.getCurrentCondition(new WeatherRequest(city.getId()), new WeatherClient.WeatherEventListener() {
                 @Override public void onWeatherRetrieved(CurrentWeather currentWeather) {
                     float currentTemp = currentWeather.weather.temperature.getTemp();
+                    String iconID = currentWeather.weather.currentCondition.getIcon();
+
                     Log.d("WL", "City ["+currentWeather.weather.location.getCity()+"] Current temp ["+currentTemp+"]");
 
-                    cityWeather.setText(Math.round((currentWeather.weather.temperature.getTemp())) + "°С");
+                    cityWeather.setText(Math.round(currentTemp) + context.getResources().getString(R.string.degree_celsius));
+                    imageLoader.displayImage(weatherHttpClient.getQueryImageURL(iconID), cityImage); // can be replaced for complete usage, if need it
 
-                    imageLoader.displayImage(weatherHttpClient.getQueryImageURL(currentWeather.weather.currentCondition.getIcon()),
-                            cityImage); // can be replaced for complete usage, if need it
+                    CityWeatherSaveParams cityWeatherSaveParams = new CityWeatherSaveParams(city.getName(), city, currentTemp, iconID);
+                    ISaver toFileSaver = new CityWeatherSaver(cityWeatherSaveParams);
+                    toFileSaver.Save(); // save cities data to file for get it when no connection available
                 }
 
                 @Override public void onWeatherError(WeatherLibException e) {
                     Log.d("WL", "Weather Error - parsing data");
                     e.printStackTrace();
+                    // load city weather data from file
                 }
 
                 @Override public void onConnectionError(Throwable throwable) {

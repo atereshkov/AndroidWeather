@@ -15,4 +15,6 @@
     <string name="page_title_three_hours">3 hours</string>
     <string name="page_title_five_days">5 days</string>
 
+    <string name="degree_celsius">°С</string>
+
 </resources>

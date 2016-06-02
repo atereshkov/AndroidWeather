@@ -32,7 +32,6 @@ import com.github.handioq.weatherapp.constants.PathConstants;
 import com.github.handioq.weatherapp.loader.ILoader;
 import com.github.handioq.weatherapp.loader.JsonFileLoader;
 import com.github.handioq.weatherapp.loader.JsonLoadParams;
-import com.github.handioq.weatherapp.models.CityWeather;
 import com.github.handioq.weatherapp.saver.ISaver;
 import com.github.handioq.weatherapp.saver.JsonFileSaver;
 import com.github.handioq.weatherapp.saver.JsonSaveParams;

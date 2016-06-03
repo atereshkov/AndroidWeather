@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.handioq.weatherapp.activities.CityWeatherActivity;
+import com.github.handioq.weatherapp.activities.SettingsActivity;
 import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
 import com.github.handioq.weatherapp.constants.PathConstants;
 import com.github.handioq.weatherapp.loader.ILoader;
@@ -139,7 +140,6 @@ public class MainActivity extends AppCompatActivity
                 //Toast.makeText(getActivity(), parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
 
                 Intent selectedCityIntent = new Intent(MainActivity.this, CityWeatherActivity.class);
-                //selectedCityIntent.putExtra("selectedCity", parent.getItemAtPosition(position).toString());
                 startActivity(selectedCityIntent);
                 appWeatherClient.setSelectedCity(appWeatherClient.getCities().get(position));
 
@@ -198,7 +198,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(settingsIntent);
         }
 
         return super.onOptionsItemSelected(item);

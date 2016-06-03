@@ -94,6 +94,7 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
                             new CurrentCityWeatherSaveParams(new CurrentCityWeather(city.getName(), city.getCountry(), currentTemp, iconID));
                     ISaver toFileSaver = new CurrentCityWeatherSaver(currentCityWeatherSaveParams);
                     toFileSaver.Save(); // save cities data to file for get it when no connection available
+                    // transfer to new class (~ OfflineAppManager)
                 }
 
                 @Override public void onWeatherError(WeatherLibException e) {
@@ -106,6 +107,9 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
                     throwable.printStackTrace();
                     // load city weather data from file
 
+                    // TODO: MAKE SOME KIND OF CHECK FOR FIRST RUN WITHOUT INTERNET
+                    // IF CITIES IN EMPTY or... IF FILES WITH CITY NOT FOUND
+
                     CurrentCityWeather currentCityWeather = new CurrentCityWeather(context);
 
                     CurrentCityWeatherLoadParams currentCityWeatherLoadParams =
@@ -116,7 +120,10 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
                     cityWeather.setText(Math.round(currentCityWeather.getCurrentTemp()) + context.getResources().getString(R.string.degree_celsius));
                     cityTitle.setText(currentCityWeather.getCityName() + ", " + currentCityWeather.getCountry());
 
-                    cityImage.setImageDrawable(currentCityWeather.getIconFromDrawable(context));
+                    if (currentCityWeather.getIconFromDrawable(context) != null) // ERROR RESOURCES NOT FOUND EXCEPTION
+                    {
+                        cityImage.setImageDrawable(currentCityWeather.getIconFromDrawable(context));
+                    }
                 }
             });
 

@@ -57,7 +57,7 @@ public class CurrentWeatherFragment extends Fragment {
                         + getActivity().getResources().getString(R.string.meters_per_second));
                 pressureTextView.setText(Float.toString(currentWeather.weather.currentCondition.getHumidity())
                         + getActivity().getResources().getString(R.string.percent));
-                humidityTextView.setText(Float.toString(Math.round(MeasurementUnitsConverter.hPaToMmHg(currentWeather.weather.currentCondition.getPressure())))
+                humidityTextView.setText(Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(currentWeather.weather.currentCondition.getPressure())))
                         + getActivity().getResources().getString(R.string.mm_hg));
             }
 

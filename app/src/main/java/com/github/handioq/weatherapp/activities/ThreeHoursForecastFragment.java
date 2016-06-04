@@ -51,28 +51,26 @@ public class ThreeHoursForecastFragment  extends Fragment {
                 ArrayList<Map<String, Weather>> groupDataList = new ArrayList<>();
                 Map<String, Weather> map;
 
-                //for (HourForecast hourForecast: hourList)
                 for (int i = 0; i < hourList.size(); i++)
                 {
                     Weather weather = weatherHourForecast.getHourForecast(i).weather;
                     long timestamp = weatherHourForecast.getHourForecast(i).timestamp;
                     map = new HashMap<>();
-                    map.put(DateUtils.convertTimestampToDate(timestamp), weather); // время года
+                    map.put(DateUtils.convertTimestampToDate(timestamp), weather);
                     groupDataList.add(map);
                 }
 
                 HourForecastExpListAdapter adapter = new HourForecastExpListAdapter(getContext(), groupDataList);
                 expandableListView.setAdapter(adapter);
-
             }
 
             @Override
             public void onWeatherError(WeatherLibException e) {
-
+                e.printStackTrace();
             }
 
             @Override public void onConnectionError(Throwable throwable) {
-
+                throwable.printStackTrace();
             }
         });
 

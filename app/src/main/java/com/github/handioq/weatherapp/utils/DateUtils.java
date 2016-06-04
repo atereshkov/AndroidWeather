@@ -13,7 +13,7 @@ import java.util.TimeZone;
 public class DateUtils {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM,yy");
-    private static final DateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+    private static final DateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm:ss"); // HH:mm:ss z
 
     public static String getToday(){
         Date today = new Date();

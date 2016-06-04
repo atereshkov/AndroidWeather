@@ -4,11 +4,46 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textChild"
+        android:id="@+id/tempText"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="ChildText" />
+        android:layout_height="wrap_content"
+        android:text="ChildText"
+        android:layout_margin="7dp" />
+
+    <TextView
+        android:id="@+id/condText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ChildText"
+        android:layout_margin="7dp" />
+
+    <TextView
+        android:id="@+id/condDescrText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ChildText"
+        android:layout_margin="7dp" />
+
+    <TextView
+        android:id="@+id/windSpeedText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ChildText"
+        android:layout_margin="7dp" />
+
+    <TextView
+        android:id="@+id/pressureText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ChildText"
+        android:layout_margin="7dp" />
+
+    <TextView
+        android:id="@+id/humidityText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ChildText"
+        android:layout_margin="7dp" />
+
 
 </LinearLayout>

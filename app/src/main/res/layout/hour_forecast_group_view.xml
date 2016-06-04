@@ -4,11 +4,12 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/textGroup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/dayly_forecast"
-        android:id="@+id/textView3"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="3dp" />
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="TextGroup" />
+
 </LinearLayout>

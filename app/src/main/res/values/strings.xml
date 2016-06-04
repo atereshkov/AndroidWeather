@@ -19,6 +19,9 @@
     <string name="percent">%</string>
     <string name="meters_per_second">mps</string>
 
+    <string name="three_hours_forecast">Forecast for 5 days with data every 3 hours.</string>
+    <string name="dayly_forecast">16 day weather forecast with daily data.</string>
+
     <string name="refresh_error_nointernet">Error updating. Verify your connection to the Internet!</string>
     <string name="title_activity_settings">Settings</string>
 

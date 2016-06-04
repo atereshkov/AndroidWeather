@@ -7,9 +7,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Three hour forecast"
+        android:text="@string/three_hours_forecast"
         android:id="@+id/textView4"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="3dp" />
 
     <ExpandableListView
         android:layout_width="match_parent"

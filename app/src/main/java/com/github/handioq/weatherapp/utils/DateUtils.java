@@ -6,12 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class DateUtils {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM,yy");
-    //private static final DateFormat TIME_FORMAT = new SimpleDateFormat("dd MMM,yy ")
+    private static final DateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
 
     public static String getToday(){
         Date today = new Date();
@@ -23,10 +25,16 @@ public class DateUtils {
 
     public static String convertTimestampToDate(long timestamp)
     {
-        Timestamp stamp = new Timestamp(System.currentTimeMillis());
-        Date date = new Date(stamp.getTime());
+        //Timestamp stamp = new Timestamp(timestamp);
+        //Date date = new Date(stamp.getTime());
 
-        return date.toString();
+        Date date = new Date(timestamp*1000L); // *1000 is to convert seconds to milliseconds
+        //SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+        //sdf.setTimeZone(TimeZone.getTimeZone("GMT-0"));
+        String formattedDate = TIMESTAMP_FORMAT.format(date);
+        //System.out.println(formattedDate);
+
+        return formattedDate;
     }
 
 }

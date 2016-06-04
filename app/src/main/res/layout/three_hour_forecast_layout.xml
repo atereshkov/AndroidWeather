@@ -10,4 +10,10 @@
         android:text="Three hour forecast"
         android:id="@+id/textView4"
         android:layout_gravity="center_horizontal" />
+
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expandableListView"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

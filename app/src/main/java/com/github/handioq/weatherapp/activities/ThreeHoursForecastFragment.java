@@ -1,16 +1,20 @@
 package com.github.handioq.weatherapp.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.github.handioq.weatherapp.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.HourForecastExpListAdapter;
+import com.github.handioq.weatherapp.utils.ConnectionDetector;
 import com.github.handioq.weatherapp.utils.DateUtils;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
@@ -31,7 +35,10 @@ public class ThreeHoursForecastFragment  extends Fragment {
     AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
     private City selectedCity;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     ExpandableListView expandableListView;
+    HourForecastExpListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +48,9 @@ public class ThreeHoursForecastFragment  extends Fragment {
         selectedCity = appWeatherClient.getSelectedCity();
         getActivity().setTitle(selectedCity.getName());
         expandableListView = (ExpandableListView) V.findViewById(R.id.expandableListView);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) V.findViewById(R.id.swipeHourLayout); // TODO: reworking
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
 
         appWeatherClient.getClient().getHourForecastWeather(new WeatherRequest(selectedCity.getId()), new WeatherClient.HourForecastWeatherEventListener()
         {
@@ -60,7 +70,7 @@ public class ThreeHoursForecastFragment  extends Fragment {
                     groupDataList.add(map);
                 }
 
-                HourForecastExpListAdapter adapter = new HourForecastExpListAdapter(getContext(), groupDataList);
+                adapter = new HourForecastExpListAdapter(getContext(), groupDataList);
                 expandableListView.setAdapter(adapter);
             }
 
@@ -75,6 +85,39 @@ public class ThreeHoursForecastFragment  extends Fragment {
         });
 
         return V;
+    }
+
+    SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener(){
+
+        @Override
+        public void onRefresh() {
+
+            //mRefreshButtonManager.onRefreshBeginning();
+            refreshCitiesListView();
+            //mRefreshButtonManager.onRefreshComplete();
+
+            //simulate doing update for 1000 ms
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
+            }, 1000);
+        }};
+
+    private void refreshCitiesListView()
+    {
+        ConnectionDetector connectionDetector = new ConnectionDetector(getContext());
+        if (!connectionDetector.checkInternetConnection())
+        {
+            Toast.makeText(getContext(), getResources().getString(R.string.refresh_error_nointernet), Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            adapter.notifyDataSetChanged();  // citiesListView will be updated
+        }
     }
 
 }

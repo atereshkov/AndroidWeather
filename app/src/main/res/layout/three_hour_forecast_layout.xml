@@ -12,9 +12,17 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="3dp" />
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeHourLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ExpandableListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/expandableListView"
         android:layout_gravity="center_horizontal" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

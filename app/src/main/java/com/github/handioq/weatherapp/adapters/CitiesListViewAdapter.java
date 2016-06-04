@@ -21,6 +21,7 @@ import com.github.handioq.weatherapp.models.CurrentCityWeather;
 import com.github.handioq.weatherapp.saver.CurrentCityWeatherSaveParams;
 import com.github.handioq.weatherapp.saver.CurrentCityWeatherSaver;
 import com.github.handioq.weatherapp.saver.ISaver;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.survivingwithandroid.weather.lib.WeatherClient;
@@ -76,7 +77,13 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
             final TextView cityWeather = (TextView) view.findViewById(R.id.cityWeather);
 
             final ImageLoader imageLoader = ImageLoader.getInstance();
-            imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+            .defaultDisplayImageOptions(defaultOptions).build();
+            imageLoader.init(config);
+
+            //imageLoader.init(ImageLoaderConfiguration.createDefault(context));
             final WeatherHttpClient weatherHttpClient = new WeatherHttpClient();
 
             weatherClient.getCurrentCondition(new WeatherRequest(city.getId()), new WeatherClient.WeatherEventListener() {
@@ -120,10 +127,8 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
                     cityWeather.setText(Math.round(currentCityWeather.getCurrentTemp()) + context.getResources().getString(R.string.degree_celsius));
                     cityTitle.setText(currentCityWeather.getCityName() + ", " + currentCityWeather.getCountry());
 
-                    if (currentCityWeather.getIconFromDrawable(context) != null) // ERROR RESOURCES NOT FOUND EXCEPTION
-                    {
-                        cityImage.setImageDrawable(currentCityWeather.getIconFromDrawable(context));
-                    }
+                    cityImage.setImageDrawable(currentCityWeather.getIconFromDrawable(context));
+
                 }
             });
 

@@ -6,7 +6,7 @@
         android:id="@+id/action_refresh"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
-        android:icon="@mipmap/refresh64"
+        android:icon="@mipmap/ic_cached_white_24dp"
         android:title="Refresh"
         android:onClick="onRefreshClick"/>
 

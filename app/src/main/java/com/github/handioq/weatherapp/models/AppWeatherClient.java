@@ -51,6 +51,15 @@ public class AppWeatherClient {
         saveCities();
     }
 
+    public void removeSelectedCity()
+    {
+        if (cities.contains(selectedCity))
+        {
+            cities.remove(selectedCity);
+        }
+        saveCities();
+    }
+
     public CurrentWeather getCurrentWeather() {
         return this.weather;
     }

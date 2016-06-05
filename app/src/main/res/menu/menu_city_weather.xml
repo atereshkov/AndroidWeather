@@ -7,8 +7,15 @@
         android:id="@+id/action_refresh"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
-        android:icon="@mipmap/refresh64"
+        android:icon="@mipmap/ic_cached_white_24dp"
         android:title="Refresh"/>
+
+    <item
+        android:id="@+id/action_delete"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:icon="@mipmap/ic_delete_white_24dp"
+        android:title="Delete"/>
 
     <item
         android:id="@+id/action_settings"

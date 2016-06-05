@@ -98,6 +98,7 @@ public class AddCityActivity extends AppCompatActivity { // TODO: IMPLEMENT INTE
                             public void onClick(DialogInterface dialog, int id) {
                                 Object obj = citySearchListView.getAdapter().getItem(cityPosition);
                                 appWeatherClient.addCity((City) obj);
+                                finish();
                             }
                         });
 

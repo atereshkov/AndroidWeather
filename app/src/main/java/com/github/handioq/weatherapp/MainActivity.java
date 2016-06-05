@@ -229,4 +229,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //mRefreshButtonManager.onRefreshBeginning();
+        refreshCitiesListView();
+        //mRefreshButtonManager.onRefreshComplete();
+    }
 }

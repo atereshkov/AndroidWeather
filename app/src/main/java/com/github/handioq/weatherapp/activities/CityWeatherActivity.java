@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.WeatherPagerAdapter;
+import com.github.handioq.weatherapp.models.AppWeatherClient;
 
 import java.util.List;
 import java.util.Vector;
@@ -104,7 +105,19 @@ public class CityWeatherActivity extends AppCompatActivity {
             finish();
         }
 
+        if (id == R.id.action_delete)
+        {
+            removeCity();
+            finish();
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void removeCity()
+    {
+        AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
+        appWeatherClient.removeSelectedCity();
     }
 
 }

@@ -8,7 +8,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
         android:id="@+id/tempTextView"
         android:layout_gravity="center_horizontal"
         android:textStyle="bold"
@@ -18,7 +17,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
         android:id="@+id/condDescrTextView"
         android:layout_gravity="center_horizontal" />
 
@@ -26,7 +24,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
         android:id="@+id/condTextView"
         android:layout_gravity="center_horizontal"
         android:textStyle="italic" />
@@ -35,24 +32,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Medium Text"
-    android:id="@+id/windSpeedTextView"
+        android:id="@+id/windSpeedTextView"
     android:layout_gravity="center_horizontal" />
 
     <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Medium Text"
-    android:id="@+id/humidityTextView"
+        android:id="@+id/humidityTextView"
     android:layout_gravity="center_horizontal" />
 
     <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Medium Text"
-    android:id="@+id/pressureTextView"
+        android:id="@+id/pressureTextView"
     android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

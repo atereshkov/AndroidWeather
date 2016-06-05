@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.handioq.weatherapp.R;
+import com.github.handioq.weatherapp.utils.IconUtils;
 import com.github.handioq.weatherapp.utils.MeasurementUnitsConverter;
 import com.survivingwithandroid.weather.lib.model.Weather;
 
@@ -82,6 +84,8 @@ public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
 
         TextView textGroup = (TextView) convertView.findViewById(R.id.textGroup);
         TextView textGroupInfo = (TextView) convertView.findViewById(R.id.textGroupInfo);
+        TextView textGroupInfoCenter = (TextView) convertView.findViewById(R.id.textGroupInfoCenter);
+        ImageView weatherImage = (ImageView) convertView.findViewById(R.id.weatherImage);
 
         List<String> timeList = new ArrayList<String>(weatherGroups.get(groupPosition).keySet());
         String time = timeList.get(0); // get time
@@ -92,9 +96,14 @@ public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
         String condition = currentWeather.currentCondition.getCondition();
 
         Resources res = mContext.getResources();
-        String groupText = String.format(res.getString(R.string.hour_group_info_title), temperature, condition);
+        String groupText = String.format(res.getString(R.string.hour_group_info_title), temperature);
+        String groupTextCenter = String.format(res.getString(R.string.hour_group_info_center), condition);
         textGroupInfo.setText(groupText);
+        textGroupInfoCenter.setText(groupTextCenter);
         textGroup.setText(time);
+
+        // imageLoader.displayImage(weatherHttpClient.getQueryImageURL(iconID), cityImage);
+        weatherImage.setImageDrawable(IconUtils.getIconFromDrawable(mContext, currentWeather.currentCondition.getIcon()));
 
         return convertView;
 

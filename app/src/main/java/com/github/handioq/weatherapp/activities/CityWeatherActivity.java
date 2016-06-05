@@ -76,6 +76,7 @@ public class CityWeatherActivity extends AppCompatActivity {
             tabLayout.setupWithViewPager(mViewPager);
         }
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +87,7 @@ public class CityWeatherActivity extends AppCompatActivity {
                 }
             });
         }
+        */
 
     }
 

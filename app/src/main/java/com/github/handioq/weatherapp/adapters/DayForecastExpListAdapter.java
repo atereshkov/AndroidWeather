@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.handioq.weatherapp.R;
+import com.github.handioq.weatherapp.utils.IconUtils;
 import com.github.handioq.weatherapp.utils.MeasurementUnitsConverter;
 import com.survivingwithandroid.weather.lib.model.DayForecast;
 import com.survivingwithandroid.weather.lib.model.Weather;
@@ -73,6 +75,8 @@ public class DayForecastExpListAdapter extends BaseExpandableListAdapter {
 
         TextView textGroup = (TextView) convertView.findViewById(R.id.textDayGroup);
         TextView textGroupInfo = (TextView) convertView.findViewById(R.id.textDayGroupInfo);
+        TextView textGroupTemp = (TextView) convertView.findViewById(R.id.textDayGroupTemp);
+        ImageView weatherImageDay = (ImageView) convertView.findViewById(R.id.weatherImageDay);
 
         List<String> timeList = new ArrayList<>(weatherGroups.get(groupPosition).keySet());
         String time = timeList.get(0); // get time
@@ -84,10 +88,14 @@ public class DayForecastExpListAdapter extends BaseExpandableListAdapter {
         String condition = currentDayForecast.weather.currentCondition.getCondition();
 
         Resources res = mContext.getResources();
-        String groupText = String.format(res.getString(R.string.day_group_info_title), nightTemp, dayTemp, condition);
+        String groupTemp = String.format(res.getString(R.string.day_group_info_title), nightTemp, dayTemp);
+        String groupText = String.format(res.getString(R.string.day_group_info_center), condition);
 
+        textGroupTemp.setText(groupTemp);
         textGroup.setText(time);
         textGroupInfo.setText(groupText);
+
+        weatherImageDay.setImageDrawable(IconUtils.getIconFromDrawable(mContext, currentDayForecast.weather.currentCondition.getIcon()));
 
         return convertView;
     }

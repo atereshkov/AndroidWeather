@@ -27,10 +27,12 @@
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to HourForecastAdapter and View -->
-    <string name="hour_group_info_title">%1$s (%2$s)</string>
+    <string name="hour_group_info_title">%1$s</string>
+    <string name="hour_group_info_center">(%1$s)</string>
 
     <!-- String related to DayForecastAdapter and View -->
-    <string name="day_group_info_title">Night: %1$s; Day: %2$s (%3$s)</string>
+    <string name="day_group_info_title">Night: %1$s; Day: %2$s</string>
+    <string name="day_group_info_center">(%1$s)</string>
 
     <!-- Strings related to Settings -->
 

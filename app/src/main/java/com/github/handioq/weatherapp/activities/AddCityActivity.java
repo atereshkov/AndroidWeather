@@ -23,7 +23,7 @@ import com.survivingwithandroid.weather.lib.model.City;
 
 import java.util.List;
 
-public class AddCityActivity extends AppCompatActivity {
+public class AddCityActivity extends AppCompatActivity { // TODO: IMPLEMENT INTERNET CONNECTION CHECKING
 
     private EditText cityEditText;
     private ListView citySearchListView;
@@ -84,13 +84,16 @@ public class AddCityActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 final int cityPosition = position;
+                String question = getApplicationContext().getResources().getString(R.string.add_question);
+                String answerYes = getApplicationContext().getResources().getString(R.string.answer_yes);
+                String answerNo = getApplicationContext().getResources().getString(R.string.answer_no);
 
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(AddCityActivity.this);
-                builder1.setMessage("Add the selected city in the list?");
+                builder1.setMessage(question);
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(
-                        "Yes",
+                        answerYes,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Object obj = citySearchListView.getAdapter().getItem(cityPosition);
@@ -99,7 +102,7 @@ public class AddCityActivity extends AppCompatActivity {
                         });
 
                 builder1.setNegativeButton(
-                        "No",
+                        answerNo,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

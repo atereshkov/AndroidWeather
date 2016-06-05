@@ -30,9 +30,14 @@
     <string name="hour_group_info_title">%1$s</string>
     <string name="hour_group_info_center">(%1$s)</string>
 
-    <!-- String related to DayForecastAdapter and View -->
+    <!-- Strings related to DayForecastAdapter and View -->
     <string name="day_group_info_title">Night: %1$s; Day: %2$s</string>
     <string name="day_group_info_center">(%1$s)</string>
+
+    <!-- Strings related to Add City Dialog -->
+    <string name="add_question">Add the selected city in the list?</string>
+    <string name="answer_yes">Yes</string>
+    <string name="answer_no">No</string>
 
     <!-- Strings related to Settings -->
 

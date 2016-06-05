@@ -1,6 +1,5 @@
 package com.github.handioq.weatherapp.adapters;
 
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -11,18 +10,19 @@ import android.widget.TextView;
 
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.utils.MeasurementUnitsConverter;
+import com.survivingwithandroid.weather.lib.model.DayForecast;
 import com.survivingwithandroid.weather.lib.model.Weather;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
+public class DayForecastExpListAdapter extends BaseExpandableListAdapter {
 
-    private ArrayList<Map<String, Weather>> weatherGroups;
+    private ArrayList<Map<String, DayForecast>> weatherGroups;
     private Context mContext;
 
-    public HourForecastExpListAdapter(Context context, ArrayList<Map<String, Weather>> weatherGroups) {
+    public DayForecastExpListAdapter(Context context, ArrayList<Map<String, DayForecast>> weatherGroups) {
         this.mContext = context;
         this.weatherGroups = weatherGroups;
     }
@@ -68,36 +68,28 @@ public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.hour_forecast_group_view, null);
+            convertView = inflater.inflate(R.layout.day_forecast_group_view, null);
         }
 
-        /*
-        if (isExpanded){
-            // change something if group expanded
-        }
-        else
-        {
-            // otherwise
-        }*/
+        TextView textGroup = (TextView) convertView.findViewById(R.id.textDayGroup);
+        TextView textGroupInfo = (TextView) convertView.findViewById(R.id.textDayGroupInfo);
 
-        TextView textGroup = (TextView) convertView.findViewById(R.id.textGroup);
-        TextView textGroupInfo = (TextView) convertView.findViewById(R.id.textGroupInfo);
-
-        List<String> timeList = new ArrayList<String>(weatherGroups.get(groupPosition).keySet());
+        List<String> timeList = new ArrayList<>(weatherGroups.get(groupPosition).keySet());
         String time = timeList.get(0); // get time
 
-        List<Weather> weatherList = new ArrayList<Weather>(weatherGroups.get(groupPosition).values());
-        Weather currentWeather = weatherList.get(0); // get weather for this time
-        String temperature = Math.round(currentWeather.temperature.getTemp()) + mContext.getResources().getString(R.string.degree_celsius);
-        String condition = currentWeather.currentCondition.getCondition();
+        List<DayForecast> weatherList = new ArrayList<>(weatherGroups.get(groupPosition).values());
+        DayForecast currentDayForecast = weatherList.get(0); // get weather for this day
+        String nightTemp = Math.round(currentDayForecast.forecastTemp.night) + mContext.getResources().getString(R.string.degree_celsius);
+        String dayTemp = Math.round(currentDayForecast.forecastTemp.day) + mContext.getResources().getString(R.string.degree_celsius);
+        String condition = currentDayForecast.weather.currentCondition.getCondition();
 
         Resources res = mContext.getResources();
-        String groupText = String.format(res.getString(R.string.hour_group_info_title), temperature, condition);
-        textGroupInfo.setText(groupText);
+        String groupText = String.format(res.getString(R.string.day_group_info_title), nightTemp, dayTemp, condition);
+
         textGroup.setText(time);
+        textGroupInfo.setText(groupText);
 
         return convertView;
-
     }
 
     @Override
@@ -105,27 +97,36 @@ public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
                              View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.hour_forecast_child_view, null);
+            convertView = inflater.inflate(R.layout.day_forecast_child_view, null);
         }
 
-        TextView tempTextView = (TextView) convertView.findViewById(R.id.tempText);
+        TextView tempMornView = (TextView) convertView.findViewById(R.id.tempMornText);
+        TextView tempDayView = (TextView) convertView.findViewById(R.id.tempDayText);
+        TextView tempEvenView = (TextView) convertView.findViewById(R.id.tempEvenText);
+        TextView tempNightView = (TextView) convertView.findViewById(R.id.tempNightText);
         TextView pressureText = (TextView) convertView.findViewById(R.id.pressureText);
         TextView humidityText = (TextView) convertView.findViewById(R.id.humidityText);
         TextView condText = (TextView) convertView.findViewById(R.id.condText);
         TextView condDescrText = (TextView) convertView.findViewById(R.id.condDescrText);
         TextView windSpeedText = (TextView) convertView.findViewById(R.id.windSpeedText);
 
-        List<Weather> weatherList = new ArrayList<Weather>(weatherGroups.get(groupPosition).values());
-        Weather currentWeather = weatherList.get(0);
+        List<DayForecast> weatherList = new ArrayList<DayForecast>(weatherGroups.get(groupPosition).values());
+        DayForecast dayForecast = weatherList.get(0);
 
-        tempTextView.setText(Math.round(currentWeather.temperature.getTemp()) + mContext.getResources().getString(R.string.degree_celsius));
-        condDescrText.setText(currentWeather.currentCondition.getDescr());
-        condText.setText(currentWeather.currentCondition.getCondition());
-        windSpeedText.setText(Float.toString(currentWeather.wind.getSpeed())
+        tempMornView.setText(Math.round(dayForecast.forecastTemp.morning) + mContext.getResources().getString(R.string.degree_celsius));
+        tempDayView.setText(Math.round(dayForecast.forecastTemp.day) + mContext.getResources().getString(R.string.degree_celsius));
+        tempEvenView.setText(Math.round(dayForecast.forecastTemp.eve) + mContext.getResources().getString(R.string.degree_celsius));
+        tempNightView.setText(Math.round(dayForecast.forecastTemp.night) + mContext.getResources().getString(R.string.degree_celsius));
+
+        condDescrText.setText(dayForecast.weather.currentCondition.getDescr());
+        condText.setText(dayForecast.weather.currentCondition.getCondition());
+        windSpeedText.setText(Float.toString(dayForecast.weather.wind.getSpeed())
                 + mContext.getResources().getString(R.string.meters_per_second));
-        pressureText.setText(Float.toString(currentWeather.currentCondition.getHumidity())
+
+        pressureText.setText(Float.toString(dayForecast.weather.currentCondition.getHumidity())
                 + mContext.getResources().getString(R.string.percent));
-        humidityText.setText(Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(currentWeather.currentCondition.getPressure())))
+
+        humidityText.setText(Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(dayForecast.weather.currentCondition.getPressure())))
                 + mContext.getResources().getString(R.string.mm_hg));
 
         return convertView;
@@ -135,4 +136,5 @@ public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
 }

@@ -1,23 +1,127 @@
 package com.github.handioq.weatherapp.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.Toast;
 
+import com.github.handioq.weatherapp.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
+import com.github.handioq.weatherapp.adapters.DayForecastExpListAdapter;
+import com.github.handioq.weatherapp.adapters.HourForecastExpListAdapter;
+import com.github.handioq.weatherapp.utils.ConnectionDetector;
+import com.github.handioq.weatherapp.utils.DateUtils;
+import com.survivingwithandroid.weather.lib.WeatherClient;
+import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
+import com.survivingwithandroid.weather.lib.model.City;
+import com.survivingwithandroid.weather.lib.model.DayForecast;
+import com.survivingwithandroid.weather.lib.model.Weather;
+import com.survivingwithandroid.weather.lib.model.WeatherForecast;
+import com.survivingwithandroid.weather.lib.request.WeatherRequest;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class FiveDaysForecastFragment extends Fragment {
+
+    AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
+    private City selectedCity;
+
+    private SwipeRefreshLayout swipeDayRefreshLayout;
+
+    ExpandableListView expandableDayListView;
+    DayForecastExpListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View V = inflater.inflate(R.layout.five_days_forecast_layout, container, false);
 
+        selectedCity = appWeatherClient.getSelectedCity();
+        getActivity().setTitle(selectedCity.getName());
+        expandableDayListView = (ExpandableListView) V.findViewById(R.id.expandableDayListView);
+
+        swipeDayRefreshLayout = (SwipeRefreshLayout) V.findViewById(R.id.swipeDayLayout); // TODO: reworking
+        swipeDayRefreshLayout.setOnRefreshListener(onRefreshListener);
+
+        appWeatherClient.getClient().getForecastWeather(new WeatherRequest(selectedCity.getId()), new WeatherClient.ForecastWeatherEventListener() {
+
+            @Override
+            public void onWeatherRetrieved(WeatherForecast forecast) {
+                List dayForecastList = forecast.getForecast();
+
+                ArrayList<Map<String, DayForecast>> groupDataList = new ArrayList<>();
+                Map<String, DayForecast> map;
+
+                for (int i = 0; i < dayForecastList.size(); i++)
+                {
+                    DayForecast dayForecast = forecast.getForecast(i);
+                    long timestamp = forecast.getForecast(i).timestamp;
+                    map = new HashMap<>();
+                    map.put(DateUtils.convertTimestampToDate(timestamp, "days"), dayForecast);
+                    groupDataList.add(map);
+                }
+
+                adapter = new DayForecastExpListAdapter(getContext(), groupDataList);
+                expandableDayListView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onWeatherError(WeatherLibException t) {
+                t.printStackTrace();
+            }
+
+            @Override
+            public void onConnectionError(Throwable t) {
+                t.printStackTrace();
+            }
+
+        });
+
 
         return V;
     }
+
+    SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener(){
+
+        @Override
+        public void onRefresh() {
+
+            //mRefreshButtonManager.onRefreshBeginning();
+            refreshCitiesListView();
+            //mRefreshButtonManager.onRefreshComplete();
+
+            //simulate doing update for 1000 ms
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    swipeDayRefreshLayout.setRefreshing(false);
+                }
+
+            }, 1000);
+        }};
+
+    private void refreshCitiesListView()
+    {
+        ConnectionDetector connectionDetector = new ConnectionDetector(getContext());
+        if (!connectionDetector.checkInternetConnection())
+        {
+            Toast.makeText(getContext(), getResources().getString(R.string.refresh_error_nointernet), Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            adapter.notifyDataSetChanged();  // citiesListView will be updated
+        }
+    }
+
 
 }

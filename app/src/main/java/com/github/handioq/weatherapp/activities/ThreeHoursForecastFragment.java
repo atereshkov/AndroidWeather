@@ -66,7 +66,7 @@ public class ThreeHoursForecastFragment  extends Fragment {
                     Weather weather = weatherHourForecast.getHourForecast(i).weather;
                     long timestamp = weatherHourForecast.getHourForecast(i).timestamp;
                     map = new HashMap<>();
-                    map.put(DateUtils.convertTimestampToDate(timestamp), weather);
+                    map.put(DateUtils.convertTimestampToDate(timestamp, "hours"), weather);
                     groupDataList.add(map);
                 }
 

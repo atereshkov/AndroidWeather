@@ -14,6 +14,7 @@ public class DateUtils {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM,yy");
     private static final DateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm:ss"); // HH:mm:ss z
+    private static final DateFormat TIMESTAMP_FORMAT_DAY = new SimpleDateFormat("dd MMM yyyy");
 
     public static String getToday(){
         Date today = new Date();
@@ -23,16 +24,23 @@ public class DateUtils {
         return DATE_FORMAT.format(tempcal.getTime());
     }
 
-    public static String convertTimestampToDate(long timestamp)
+    public static String convertTimestampToDate(long timestamp, String format)
     {
-        //Timestamp stamp = new Timestamp(timestamp);
-        //Date date = new Date(stamp.getTime());
-
+        String formattedDate = "";
         Date date = new Date(timestamp*1000L); // *1000 is to convert seconds to milliseconds
-        //SimpleDateFormat sdf = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
-        //sdf.setTimeZone(TimeZone.getTimeZone("GMT-0"));
-        String formattedDate = TIMESTAMP_FORMAT.format(date);
-        //System.out.println(formattedDate);
+
+        if (format.equals("") || format.equals("hours"))
+        {
+            //sdf.setTimeZone(TimeZone.getTimeZone("GMT-0"));
+            formattedDate = TIMESTAMP_FORMAT.format(date);
+        }
+        else
+           if (format.equals("days"))
+           {
+               //sdf.setTimeZone(TimeZone.getTimeZone("GMT-0"));
+               formattedDate = TIMESTAMP_FORMAT_DAY.format(date);
+           }
+
 
         return formattedDate;
     }

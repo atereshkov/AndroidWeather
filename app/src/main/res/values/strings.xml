@@ -18,14 +18,19 @@
     <string name="degree_celsius">°С</string>
     <string name="percent">%</string>
     <string name="meters_per_second">mps</string>
+    <string name="mm_hg">mm Hg</string>
 
     <string name="three_hours_forecast">Forecast for 5 days with data every 3 hours.</string>
-    <string name="dayly_forecast">16 day weather forecast with daily data.</string>
+    <string name="dayly_forecast">5 day weather forecast with daily data.</string>
 
     <string name="refresh_error_nointernet">Error updating. Verify your connection to the Internet!</string>
     <string name="title_activity_settings">Settings</string>
 
-    <string name="mm_hg">mm Hg</string>
+    <!-- Strings related to HourForecastAdapter and View -->
+    <string name="hour_group_info_title">%1$s (%2$s)</string>
+
+    <!-- String related to DayForecastAdapter and View -->
+    <string name="day_group_info_title">Night: %1$s; Day: %2$s (%3$s)</string>
 
     <!-- Strings related to Settings -->
 

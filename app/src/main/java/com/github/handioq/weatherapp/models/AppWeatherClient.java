@@ -42,6 +42,15 @@ public class AppWeatherClient {
         return me;
     }
 
+    public void addCity(City city)
+    {
+        if (!cities.contains(city))
+        {
+            cities.add(city);
+        }
+        saveCities();
+    }
+
     public CurrentWeather getCurrentWeather() {
         return this.weather;
     }

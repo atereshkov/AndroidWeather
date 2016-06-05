@@ -1,11 +1,15 @@
 package com.github.handioq.weatherapp.activities;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -24,6 +28,8 @@ public class AddCityActivity extends AppCompatActivity {
     private EditText cityEditText;
     private ListView citySearchListView;
 
+    AppWeatherClient appWeatherClient;
+
     private CitySearchListAdapter citySearchListAdapter;
 
     @Override
@@ -34,9 +40,8 @@ public class AddCityActivity extends AppCompatActivity {
 
         cityEditText = (EditText) findViewById(R.id.cityEditText);
         citySearchListView = (ListView) findViewById(R.id.citySearchListView);
-        //final String cityToSearch = cityEditText.getText().toString();
 
-        final AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
+        appWeatherClient = AppWeatherClient.getInstance();
 
         cityEditText.addTextChangedListener(new TextWatcher() {
 
@@ -56,8 +61,7 @@ public class AddCityActivity extends AppCompatActivity {
                         if (!cityList.isEmpty())
                         {
                             citySearchListAdapter = new CitySearchListAdapter(AddCityActivity.this,
-                                    android.R.layout.simple_list_item_1,
-                                    cityList);
+                                    android.R.layout.simple_list_item_1, cityList);
                             citySearchListView.setAdapter(citySearchListAdapter);
                         }
                     }
@@ -65,14 +69,45 @@ public class AddCityActivity extends AppCompatActivity {
                     @Override
                     public void onWeatherError(WeatherLibException t) {
                         //t.printStackTrace();
-                        // cities not found
+                        // cities not found for this query
                     }
 
                     @Override
                     public void onConnectionError(Throwable t) {
-                        t.printStackTrace();
+                        t.printStackTrace(); // internet problems?
                     }
                 });
+            }
+        });
+
+        citySearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final int cityPosition = position;
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(AddCityActivity.this);
+                builder1.setMessage("Add the selected city in the list?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Object obj = citySearchListView.getAdapter().getItem(cityPosition);
+                                appWeatherClient.addCity((City) obj);
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 

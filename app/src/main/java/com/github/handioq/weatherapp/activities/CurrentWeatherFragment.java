@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.handioq.weatherapp.AppWeatherClient;
+import com.github.handioq.weatherapp.models.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.utils.MeasurementUnitsConverter;
 import com.survivingwithandroid.weather.lib.WeatherClient;

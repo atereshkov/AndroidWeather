@@ -1,7 +1,6 @@
-package com.github.handioq.weatherapp;
+package com.github.handioq.weatherapp.models;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.github.handioq.weatherapp.constants.PathConstants;
 import com.github.handioq.weatherapp.loader.ILoader;
@@ -12,14 +11,10 @@ import com.github.handioq.weatherapp.saver.JsonFileSaver;
 import com.github.handioq.weatherapp.saver.JsonSaveParams;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherConfig;
-import com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient;
-import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
 import com.survivingwithandroid.weather.lib.model.CurrentWeather;
 import com.survivingwithandroid.weather.lib.model.WeatherForecast;
-import com.survivingwithandroid.weather.lib.request.WeatherRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

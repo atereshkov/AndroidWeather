@@ -1,14 +1,10 @@
 package com.github.handioq.weatherapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,39 +14,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.handioq.weatherapp.activities.AddCityActivity;
 import com.github.handioq.weatherapp.activities.CityWeatherActivity;
 import com.github.handioq.weatherapp.activities.SettingsActivity;
 import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
-import com.github.handioq.weatherapp.constants.PathConstants;
-import com.github.handioq.weatherapp.loader.ILoader;
-import com.github.handioq.weatherapp.loader.JsonFileLoader;
-import com.github.handioq.weatherapp.loader.JsonLoadParams;
-import com.github.handioq.weatherapp.saver.ISaver;
-import com.github.handioq.weatherapp.saver.JsonFileSaver;
-import com.github.handioq.weatherapp.saver.JsonSaveParams;
+import com.github.handioq.weatherapp.models.AppWeatherClient;
 import com.github.handioq.weatherapp.utils.AnimatingRefreshButtonManager;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherConfig;
 import com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient;
-import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.exception.WeatherProviderInstantiationException;
-import com.survivingwithandroid.weather.lib.model.City;
-import com.survivingwithandroid.weather.lib.model.CurrentWeather;
 import com.survivingwithandroid.weather.lib.provider.openweathermap.OpenweathermapProviderType;
-import com.survivingwithandroid.weather.lib.request.WeatherRequest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,8 +58,8 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View view) {
                     //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
-                    //Intent addCityIntent = new Intent(MainActivity.this, AddCityActivity.class);
-                    //startActivity(addCityIntent);
+                    Intent addCityIntent = new Intent(MainActivity.this, AddCityActivity.class);
+                    startActivity(addCityIntent);
                 }
             });
         }

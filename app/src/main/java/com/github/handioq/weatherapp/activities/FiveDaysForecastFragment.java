@@ -10,17 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-import com.github.handioq.weatherapp.AppWeatherClient;
+import com.github.handioq.weatherapp.models.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.DayForecastExpListAdapter;
-import com.github.handioq.weatherapp.adapters.HourForecastExpListAdapter;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
 import com.github.handioq.weatherapp.utils.DateUtils;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
 import com.survivingwithandroid.weather.lib.model.DayForecast;
-import com.survivingwithandroid.weather.lib.model.Weather;
 import com.survivingwithandroid.weather.lib.model.WeatherForecast;
 import com.survivingwithandroid.weather.lib.request.WeatherRequest;
 

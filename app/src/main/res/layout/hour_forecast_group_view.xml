@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:text="TextGroup"
+            android:textSize="19sp"
         android:layout_marginLeft="5dp"
         android:layout_gravity="center_vertical" />
 
@@ -30,6 +31,7 @@
             android:layout_height="wrap_content"
             android:textStyle="italic"
             android:text="TextGroup"
+            android:textSize="19sp"
             android:layout_marginLeft="15dp"
             android:layout_gravity="center_vertical" />
 
@@ -40,6 +42,7 @@
         android:textStyle="bold"
         android:text="TextGroup"
         android:layout_marginLeft="10dp"
+        android:textSize="19sp"
         android:gravity="right"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="20dp" />

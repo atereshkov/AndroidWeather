@@ -4,7 +4,7 @@
     android:contentDescription="Refresh"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:src="@mipmap/refresh64"
+    android:src="@mipmap/ic_cached_white_24dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     />

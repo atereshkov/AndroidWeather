@@ -40,6 +40,9 @@
     <string name="answer_yes">Yes</string>
     <string name="answer_no">No</string>
 
+    <!-- Strings related to Remove City Dialog -->
+    <string name="remove_question">Are you sure?</string>
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->

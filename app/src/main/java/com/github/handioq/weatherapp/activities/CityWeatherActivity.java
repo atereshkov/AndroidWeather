@@ -1,6 +1,8 @@
 package com.github.handioq.weatherapp.activities;
 
+import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.WeatherPagerAdapter;
 import com.github.handioq.weatherapp.models.AppWeatherClient;
+import com.survivingwithandroid.weather.lib.model.City;
 
 import java.util.List;
 import java.util.Vector;
@@ -108,7 +111,6 @@ public class CityWeatherActivity extends AppCompatActivity {
         if (id == R.id.action_delete)
         {
             removeCity();
-            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -116,8 +118,34 @@ public class CityWeatherActivity extends AppCompatActivity {
 
     private void removeCity()
     {
-        AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
-        appWeatherClient.removeSelectedCity();
+        String question = getApplicationContext().getResources().getString(R.string.remove_question);
+        String answerYes = getApplicationContext().getResources().getString(R.string.answer_yes);
+        String answerNo = getApplicationContext().getResources().getString(R.string.answer_no);
+
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(CityWeatherActivity.this);
+        builder1.setMessage(question);
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                answerYes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
+                        appWeatherClient.removeSelectedCity();
+                        finish();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                answerNo,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 
 }

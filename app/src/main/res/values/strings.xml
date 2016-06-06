@@ -31,7 +31,8 @@
     <string name="hour_group_info_center">(%1$s)</string>
 
     <!-- Strings related to DayForecastAdapter and View -->
-    <string name="day_group_info_title">Night: %1$s; Day: %2$s</string>
+    <string name="day_group_info_title_night">%1$s</string>
+    <string name="day_group_info_title_day">%1$s</string>
     <string name="day_group_info_center">(%1$s)</string>
 
     <!-- Strings related to Add City Dialog -->

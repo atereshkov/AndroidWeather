@@ -76,6 +76,7 @@ public class DayForecastExpListAdapter extends BaseExpandableListAdapter {
         TextView textGroup = (TextView) convertView.findViewById(R.id.textDayGroup);
         TextView textGroupInfo = (TextView) convertView.findViewById(R.id.textDayGroupInfo);
         TextView textGroupTemp = (TextView) convertView.findViewById(R.id.textDayGroupTemp);
+        TextView textGroupTemp2 = (TextView) convertView.findViewById(R.id.textDayGroupTemp2);
         ImageView weatherImageDay = (ImageView) convertView.findViewById(R.id.weatherImageDay);
 
         List<String> timeList = new ArrayList<>(weatherGroups.get(groupPosition).keySet());
@@ -88,13 +89,14 @@ public class DayForecastExpListAdapter extends BaseExpandableListAdapter {
         String condition = currentDayForecast.weather.currentCondition.getCondition();
 
         Resources res = mContext.getResources();
-        String groupTemp = String.format(res.getString(R.string.day_group_info_title), nightTemp, dayTemp);
+        String groupTempDay = String.format(res.getString(R.string.day_group_info_title_day), dayTemp);
+        String groupTempNight = String.format(res.getString(R.string.day_group_info_title_night), nightTemp);
         String groupText = String.format(res.getString(R.string.day_group_info_center), condition);
 
-        textGroupTemp.setText(groupTemp);
+        textGroupTemp.setText(groupTempNight);
+        textGroupTemp2.setText(groupTempDay);
         textGroup.setText(time);
         textGroupInfo.setText(groupText);
-
         weatherImageDay.setImageDrawable(IconUtils.getIconFromDrawable(mContext, currentDayForecast.weather.currentCondition.getIcon()));
 
         return convertView;

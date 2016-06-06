@@ -25,6 +25,9 @@ import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
 import com.github.handioq.weatherapp.models.AppWeatherClient;
 import com.github.handioq.weatherapp.utils.AnimatingRefreshButtonManager;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherConfig;
 import com.survivingwithandroid.weather.lib.client.okhttp.WeatherDefaultClient;
@@ -81,6 +84,13 @@ public class MainActivity extends AppCompatActivity
         //City.CityBuilder builder1 = new City.CityBuilder();
         //cities.add(builder1.name("Minsk").country("BY").id("625144").build());
         //cities.add(builder1.name("New York City").country("US").id("5128581").build());
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
+        ImageLoaderConfiguration configLoader = new ImageLoaderConfiguration.Builder(this)
+                .defaultDisplayImageOptions(defaultOptions).build();
+        imageLoader.init(configLoader);
 
         final AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
 

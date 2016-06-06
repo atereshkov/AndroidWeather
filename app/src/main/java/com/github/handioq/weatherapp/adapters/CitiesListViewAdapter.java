@@ -79,11 +79,6 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
 
             final ImageLoader imageLoader = ImageLoader.getInstance();
 
-            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
-            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-            .defaultDisplayImageOptions(defaultOptions).build();
-            imageLoader.init(config);
-
             //imageLoader.init(ImageLoaderConfiguration.createDefault(context));
             //final WeatherHttpClient weatherHttpClient = new WeatherHttpClient();
 

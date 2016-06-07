@@ -17,8 +17,14 @@
 
     <string name="degree_celsius">°С</string>
     <string name="percent">%</string>
-    <string name="meters_per_second">mps</string>
-    <string name="mm_hg">mm Hg</string>
+    <string name="meters_per_second"> mps</string>
+    <string name="mm_hg"> mm Hg</string>
+
+    <!-- Strings related to Current Weather Fragment -->
+    <string name="temp_celsius">%1$s°С</string>
+    <string name="wind_speed">%1$s mps</string>
+    <string name="humidity_text">%1$s</string>
+    <string name="pressure">%1$s mm Hg</string>
 
     <string name="three_hours_forecast">Forecast for 5 days with data every 3 hours.</string>
     <string name="dayly_forecast">5 day weather forecast with daily data.</string>

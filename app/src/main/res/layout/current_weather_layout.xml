@@ -1,52 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+    <com.github.pwittchen.weathericonview.WeatherIconView
+        android:id="@+id/my_weather_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:weatherIconResource="@string/wi_owm_day_500"
+        custom:weatherIconColor="@color/colorPrimary"
+        custom:weatherIconSize="100"
+        android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/tempTextView"
-        android:layout_gravity="center_horizontal"
         android:textStyle="bold"
-        android:textSize="35sp" />
+        android:textSize="35sp"
+        android:layout_margin="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/condDescrTextView"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/condDescrTextView"
-        android:layout_gravity="center_horizontal" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/my_weather_icon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_small_craft_advisory"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="20"
+            android:layout_margin="3dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/condTextView"
-        android:layout_gravity="center_horizontal"
         android:textStyle="italic" />
 
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/windSpeedTextView"
-    android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/my_weather_icon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_windy"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="20"
+            android:layout_margin="3dp" />
 
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/humidityTextView"
-    android:layout_gravity="center_horizontal" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/windSpeedTextView" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/my_weather_icon3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_humidity"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="20"
+            android:layout_margin="3dp" />
 
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/pressureTextView"
-    android:layout_gravity="center_horizontal" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/humidityTextView" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/my_weather_icon4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_barometer"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="20"
+            android:layout_margin="3dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/pressureTextView" />
+
+        </LinearLayout>
+
 
 </LinearLayout>

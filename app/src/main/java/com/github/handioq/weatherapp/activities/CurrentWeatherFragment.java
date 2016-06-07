@@ -1,5 +1,6 @@
 package com.github.handioq.weatherapp.activities;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -50,15 +51,26 @@ public class CurrentWeatherFragment extends Fragment {
                 float currentTemp = currentWeather.weather.temperature.getTemp();
                 Log.d("CWF", "City ["+currentWeather.weather.location.getCity()+"] Current temp ["+currentTemp+"]");
 
-                tempTextView.setText(Math.round(currentTemp) + getActivity().getResources().getString(R.string.degree_celsius));
+                Resources res = getActivity().getResources();
+                String temp = String.format(res.getString(R.string.temp_celsius), Math.round(currentTemp));
+                String windSpeed = String.format(res.getString(R.string.wind_speed), Float.toString(currentWeather.weather.wind.getSpeed()));
+                String humidity = String.format(res.getString(R.string.humidity_text), Float.toString(currentWeather.weather.currentCondition.getHumidity()));
+                String pressure = String.format(res.getString(R.string.pressure), Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(currentWeather.weather.currentCondition.getPressure()))));
+
+                //tempTextView.setText(Math.round(currentTemp) + getActivity().getResources().getString(R.string.degree_celsius));
+                tempTextView.setText(temp);
+                windSpeedTextView.setText(windSpeed);
+                pressureTextView.setText(pressure);
+                humidityTextView.setText(humidity);
+
                 condDescrTextView.setText(currentWeather.weather.currentCondition.getCondition());
                 condTextView.setText(currentWeather.weather.currentCondition.getDescr());
-                windSpeedTextView.setText(Float.toString(currentWeather.weather.wind.getSpeed())
-                        + getActivity().getResources().getString(R.string.meters_per_second));
-                pressureTextView.setText(Float.toString(currentWeather.weather.currentCondition.getHumidity())
-                        + getActivity().getResources().getString(R.string.percent));
-                humidityTextView.setText(Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(currentWeather.weather.currentCondition.getPressure())))
-                        + getActivity().getResources().getString(R.string.mm_hg));
+                //windSpeedTextView.setText(Float.toString(currentWeather.weather.wind.getSpeed())
+                //        + getActivity().getResources().getString(R.string.meters_per_second));
+                //pressureTextView.setText(Float.toString(currentWeather.weather.currentCondition.getHumidity())
+                //        + getActivity().getResources().getString(R.string.percent));
+                //humidityTextView.setText(Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(currentWeather.weather.currentCondition.getPressure())))
+                //        + getActivity().getResources().getString(R.string.mm_hg));
             }
 
             @Override public void onWeatherError(WeatherLibException e) {

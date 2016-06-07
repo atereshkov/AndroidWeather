@@ -22,6 +22,7 @@ import com.github.handioq.weatherapp.activities.AddCityActivity;
 import com.github.handioq.weatherapp.activities.CityWeatherActivity;
 import com.github.handioq.weatherapp.activities.SettingsActivity;
 import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
+import com.github.handioq.weatherapp.constants.KeyStore;
 import com.github.handioq.weatherapp.models.AppWeatherClient;
 import com.github.handioq.weatherapp.utils.AnimatingRefreshButtonManager;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
@@ -52,7 +53,9 @@ public class MainActivity extends AppCompatActivity
 
         citiesListView = (ListView) findViewById(R.id.citiesListView);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipelayout);
-        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null) {
@@ -96,12 +99,7 @@ public class MainActivity extends AppCompatActivity
 
         WeatherClient.ClientBuilder builder = new WeatherClient.ClientBuilder();
         WeatherConfig config = new WeatherConfig();
-
-        config.unitSystem = WeatherConfig.UNIT_SYSTEM.M;
-        config.lang = "en"; // english
-        config.maxResult = 5; // max number of cities retrieved
-        config.numDays = 6; // max num of days in the forecast
-        config.ApiKey = "863661c7cccfddd038691c9d714a0266";
+        config.ApiKey = KeyStore.OPENWEATHERMAP_API_KEY;
 
         WeatherClient client = new WeatherDefaultClient();
 

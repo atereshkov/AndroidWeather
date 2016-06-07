@@ -12,7 +12,7 @@
         android:gravity="center">
 
     <com.github.pwittchen.weathericonview.WeatherIconView
-        android:id="@+id/my_weather_icon"
+        android:id="@+id/mainWeatherIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         custom:weatherIconResource="@string/wi_owm_day_500"

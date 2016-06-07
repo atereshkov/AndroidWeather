@@ -1,6 +1,7 @@
 package com.github.handioq.weatherapp.activities;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 
 import com.github.handioq.weatherapp.models.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
+import com.github.handioq.weatherapp.utils.IconUtils;
 import com.github.handioq.weatherapp.utils.MeasurementUnitsConverter;
+import com.github.pwittchen.weathericonview.WeatherIconView;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
@@ -29,6 +32,7 @@ public class CurrentWeatherFragment extends Fragment {
     private TextView windSpeedTextView;
     private TextView pressureTextView;
     private TextView humidityTextView;
+    private WeatherIconView weatherIcon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +49,7 @@ public class CurrentWeatherFragment extends Fragment {
         windSpeedTextView = (TextView) V.findViewById(R.id.windSpeedTextView);
         humidityTextView = (TextView) V.findViewById(R.id.humidityTextView);
         pressureTextView = (TextView) V.findViewById(R.id.pressureTextView);
+        weatherIcon = (WeatherIconView) V.findViewById(R.id.mainWeatherIcon);
 
         appWeatherClient.getClient().getCurrentCondition(new WeatherRequest(selectedCity.getId()), new WeatherClient.WeatherEventListener() {
             @Override public void onWeatherRetrieved(CurrentWeather currentWeather) {
@@ -70,6 +75,11 @@ public class CurrentWeatherFragment extends Fragment {
 
                 condDescrTextView.setText(condition);
                 condTextView.setText(conditionDescr);
+
+                weatherIcon.setIconResource(IconUtils.getIconResource(getActivity(), currentWeather.weather.currentCondition.getWeatherId(), currentWeather.weather.currentCondition.getIcon()));
+                //weatherIcon.setIconResource(getString(R.string.wi_day_sunny_overcast));
+                //weatherIcon.setIconSize(100);
+                //weatherIcon.setIconColor(Color.BLACK);
             }
 
             @Override public void onWeatherError(WeatherLibException e) {

@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/tempIconMorn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_thermometer"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="13"
+            android:layout_margin="7dp" />
 
     <TextView
         android:id="@+id/tempMornText"
@@ -10,12 +26,44 @@
         android:text="ChildText"
         android:layout_margin="7dp" />
 
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/tempIconDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_thermometer"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="13"
+            android:layout_margin="7dp" />
+
     <TextView
         android:id="@+id/tempDayText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ChildText"
         android:layout_margin="7dp" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/tempIconEven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_thermometer"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="13"
+            android:layout_margin="7dp" />
 
     <TextView
         android:id="@+id/tempEvenText"
@@ -24,12 +72,44 @@
         android:text="ChildText"
         android:layout_margin="7dp" />
 
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/tempIconDayNight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_thermometer"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="13"
+            android:layout_margin="7dp" />
+
     <TextView
         android:id="@+id/tempNightText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ChildText"
         android:layout_margin="7dp" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/condIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_direction_right"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="13"
+            android:layout_margin="7dp" />
 
     <TextView
         android:id="@+id/condText"
@@ -38,12 +118,44 @@
         android:text="ChildText"
         android:layout_margin="7dp" />
 
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/condIconDescr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_direction_right"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="13"
+            android:layout_margin="7dp" />
+
     <TextView
         android:id="@+id/condDescrText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ChildText"
         android:layout_margin="7dp" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/windIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_windy"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="13"
+            android:layout_margin="7dp" />
 
     <TextView
         android:id="@+id/windSpeedText"
@@ -52,6 +164,22 @@
         android:text="ChildText"
         android:layout_margin="7dp" />
 
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/humidityIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_humidity"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="13"
+            android:layout_margin="7dp" />
+
     <TextView
         android:id="@+id/pressureText"
         android:layout_width="match_parent"
@@ -59,11 +187,29 @@
         android:text="ChildText"
         android:layout_margin="7dp" />
 
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:id="@+id/pressureIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:weatherIconResource="@string/wi_barometer"
+            custom:weatherIconColor="@color/colorPrimary"
+            custom:weatherIconSize="13"
+            android:layout_margin="7dp" />
+
     <TextView
         android:id="@+id/humidityText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ChildText"
         android:layout_margin="7dp" />
+
+        </LinearLayout>
 
 </LinearLayout>

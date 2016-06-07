@@ -49,7 +49,10 @@ public class ThreeHoursForecastFragment  extends Fragment {
         expandableListView = (ExpandableListView) V.findViewById(R.id.expandableListView);
 
         swipeRefreshLayout = (SwipeRefreshLayout) V.findViewById(R.id.swipeHourLayout); // TODO: reworking
-        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        if (swipeRefreshLayout != null)
+        {
+            swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        }
 
         appWeatherClient.getClient().getHourForecastWeather(new WeatherRequest(selectedCity.getId()), new WeatherClient.HourForecastWeatherEventListener()
         {

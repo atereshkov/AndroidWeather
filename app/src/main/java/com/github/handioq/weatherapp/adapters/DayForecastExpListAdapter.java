@@ -123,21 +123,31 @@ public class DayForecastExpListAdapter extends BaseExpandableListAdapter {
         List<DayForecast> weatherList = new ArrayList<DayForecast>(weatherGroups.get(groupPosition).values());
         DayForecast dayForecast = weatherList.get(0);
 
-        tempMornView.setText(Math.round(dayForecast.forecastTemp.morning) + mContext.getResources().getString(R.string.degree_celsius));
-        tempDayView.setText(Math.round(dayForecast.forecastTemp.day) + mContext.getResources().getString(R.string.degree_celsius));
-        tempEvenView.setText(Math.round(dayForecast.forecastTemp.eve) + mContext.getResources().getString(R.string.degree_celsius));
-        tempNightView.setText(Math.round(dayForecast.forecastTemp.night) + mContext.getResources().getString(R.string.degree_celsius));
+        Resources res = mContext.getResources();
+        String tempMorning = String.format(res.getString(R.string.day_temp_morning), Math.round(dayForecast.forecastTemp.morning));
+        String tempDay = String.format(res.getString(R.string.day_temp_day), Math.round(dayForecast.forecastTemp.day));
+        String tempEvening = String.format(res.getString(R.string.day_temp_evening), Math.round(dayForecast.forecastTemp.eve));
+        String tempNight = String.format(res.getString(R.string.day_temp_night), Math.round(dayForecast.forecastTemp.night));
 
-        condDescrText.setText(dayForecast.weather.currentCondition.getDescr());
-        condText.setText(dayForecast.weather.currentCondition.getCondition());
-        windSpeedText.setText(Float.toString(dayForecast.weather.wind.getSpeed())
-                + mContext.getResources().getString(R.string.meters_per_second));
+        tempMornView.setText(tempMorning);
+        tempDayView.setText(tempDay);
+        tempEvenView.setText(tempEvening);
+        tempNightView.setText(tempNight);
 
-        pressureText.setText(Float.toString(dayForecast.weather.currentCondition.getHumidity())
-                + mContext.getResources().getString(R.string.percent));
-
-        humidityText.setText(Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(dayForecast.weather.currentCondition.getPressure())))
+        String condition = String.format(res.getString(R.string.condition), dayForecast.weather.currentCondition.getCondition());
+        String conditionDescr = String.format(res.getString(R.string.condition_description), dayForecast.weather.currentCondition.getDescr());
+        String wind = String.format(res.getString(R.string.wind), Float.toString(dayForecast.weather.wind.getSpeed()))
+                + mContext.getResources().getString(R.string.meters_per_second);
+        String pressure = String.format(res.getString(R.string.pressure), Float.toString(dayForecast.weather.currentCondition.getHumidity()))
+                +  mContext.getResources().getString(R.string.percent);
+        String humidity = String.format(res.getString(R.string.humidity), Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(dayForecast.weather.currentCondition.getPressure())))
                 + mContext.getResources().getString(R.string.mm_hg));
+
+        condDescrText.setText(conditionDescr);
+        condText.setText(condition);
+        windSpeedText.setText(wind);
+        pressureText.setText(pressure);
+        humidityText.setText(humidity);
 
         return convertView;
     }

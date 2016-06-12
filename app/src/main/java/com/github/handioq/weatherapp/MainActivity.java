@@ -83,11 +83,6 @@ public class MainActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-        //List<City> cities = new ArrayList<City>();
-        //City.CityBuilder builder1 = new City.CityBuilder();
-        //cities.add(builder1.name("Minsk").country("BY").id("625144").build());
-        //cities.add(builder1.name("New York City").country("US").id("5128581").build());
-
         ImageLoader imageLoader = ImageLoader.getInstance();
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
@@ -100,6 +95,9 @@ public class MainActivity extends AppCompatActivity
         WeatherClient.ClientBuilder builder = new WeatherClient.ClientBuilder();
         WeatherConfig config = new WeatherConfig();
         config.ApiKey = KeyStore.OPENWEATHERMAP_API_KEY;
+        config.lang = AppWeatherClient.LANG;
+        config.maxResult = AppWeatherClient.MAX_CITIES;
+        config.numDays = AppWeatherClient.MAX_DAYS;
 
         WeatherClient client = new WeatherDefaultClient();
 

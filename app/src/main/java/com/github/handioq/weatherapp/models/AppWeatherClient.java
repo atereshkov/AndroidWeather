@@ -20,7 +20,12 @@ import java.util.List;
 /**
  * Singleton for using cities, weather and forecasts around application.
  */
+
 public class AppWeatherClient {
+
+    public final static String LANG = "en"; // english
+    public final static int MAX_CITIES = 10; // max number of cities retrieved
+    public final static int MAX_DAYS = 6; // max num of days in the forecast
 
     private static AppWeatherClient me;
     private Context ctx;

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android Weather</string>
+    <string name="app_name">Weather</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -7,8 +7,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_city_weather">CityWeatherActivity</string>
     <string name="section_format">Section: %1$d</string>
-    <string name="title_activity_add_city">AddCityActivity</string>
-    <string name="title_activity_add_city_activity">AddCityActivity</string>
+    <string name="title_activity_add_city">Add City</string>
+    <string name="title_activity_add_city_activity">Add City</string>
+
+    <string name="main_cities_listview_title">%1$s, %2$s</string>
 
     <!-- Strings for WeatherPagerAdapter and title of pages -->
     <string name="page_title_now">Now</string>

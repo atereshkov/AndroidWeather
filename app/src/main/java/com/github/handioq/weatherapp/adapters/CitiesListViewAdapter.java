@@ -1,6 +1,7 @@
 package com.github.handioq.weatherapp.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.util.Log;
@@ -79,8 +80,7 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
 
             final ImageLoader imageLoader = ImageLoader.getInstance();
 
-            //imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-            //final WeatherHttpClient weatherHttpClient = new WeatherHttpClient();
+            final Resources res = context.getResources();
 
             weatherClient.getCurrentCondition(new WeatherRequest(city.getId()), new WeatherClient.WeatherEventListener() {
                 @Override public void onWeatherRetrieved(CurrentWeather currentWeather) {
@@ -89,9 +89,13 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
 
                     Log.d("WL", "City ["+currentWeather.weather.location.getCity()+"] Current temp ["+currentTemp+"]");
 
-                    cityWeather.setText(Math.round(currentTemp) + context.getResources().getString(R.string.degree_celsius));
+                    String temp = String.format(res.getString(R.string.temperature), Math.round(currentTemp))
+                            + context.getResources().getString(R.string.degree_celsius);
+                    String title = String.format(res.getString(R.string.main_cities_listview_title), city.getName(), city.getCountry());
+
+                    cityWeather.setText(temp);
                     imageLoader.displayImage(IconUtils.getQueryImageURL(iconID), cityImage); // can be replaced for complete usage, if need it
-                    cityTitle.setText(city.getName() + ", " + city.getCountry());
+                    cityTitle.setText(title);
 
                     CurrentCityWeatherSaveParams currentCityWeatherSaveParams =
                             new CurrentCityWeatherSaveParams(new CurrentCityWeather(city.getName(), city.getCountry(), currentTemp, iconID));
@@ -120,9 +124,14 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
                     ILoader<CurrentCityWeather> fromFileLoader = new CurrentCityWeatherLoader(currentCityWeatherLoadParams);
                     currentCityWeather = fromFileLoader.load();
 
-                    cityWeather.setText(Math.round(currentCityWeather.getCurrentTemp()) + context.getResources().getString(R.string.degree_celsius));
-                    cityTitle.setText(currentCityWeather.getCityName() + ", " + currentCityWeather.getCountry());
+                    String temp = String.format(res.getString(R.string.temperature), Math.round(currentCityWeather.getCurrentTemp()))
+                            + context.getResources().getString(R.string.degree_celsius);
+                    String title = String.format(res.getString(R.string.main_cities_listview_title),
+                            currentCityWeather.getCityName(),
+                            currentCityWeather.getCountry());
 
+                    cityWeather.setText(temp);
+                    cityTitle.setText(title);
                     cityImage.setImageDrawable(currentCityWeather.getIconFromDrawable(context));
 
                 }

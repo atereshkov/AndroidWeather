@@ -1,12 +1,11 @@
 package com.github.handioq.weatherapp.loader;
 
 import com.github.handioq.weatherapp.constants.PathConstants;
-import com.github.handioq.weatherapp.models.CurrentCityWeather;
+import com.github.handioq.weatherapp.models.CityWeather;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class CurrentCityWeatherLoader implements ILoader<CurrentCityWeather>{
+public class CurrentCityWeatherLoader implements ILoader<CityWeather>{
 
     private String filename;
 
@@ -20,8 +19,8 @@ public class CurrentCityWeatherLoader implements ILoader<CurrentCityWeather>{
     }
 
     @Override
-    public CurrentCityWeather load() {
-        CurrentCityWeather currentCityWeather = new CurrentCityWeather();
+    public CityWeather load() {
+        CityWeather cityWeather = new CityWeather();
 
         StringFileLoader stringFileLoader = new StringFileLoader(PathConstants.APP_DIRECTORY, filename);
         String jsonStr = stringFileLoader.load();
@@ -35,13 +34,13 @@ public class CurrentCityWeatherLoader implements ILoader<CurrentCityWeather>{
             String country = jsonObject.getString("country");
             // TODO: ADD LAST UPDATE TIME
 
-            currentCityWeather = new CurrentCityWeather(name, country, currentTemp, iconID);
+            cityWeather = new CityWeather(name, country, currentTemp, iconID);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
 
-        return currentCityWeather;
+        return cityWeather;
     }
 }

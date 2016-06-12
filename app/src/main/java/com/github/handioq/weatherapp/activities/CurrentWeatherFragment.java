@@ -1,7 +1,6 @@
 package com.github.handioq.weatherapp.activities;
 
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.handioq.weatherapp.models.AppWeatherClient;
+import com.github.handioq.weatherapp.client.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.utils.IconUtils;
 import com.github.handioq.weatherapp.utils.MeasurementUnitsConverter;

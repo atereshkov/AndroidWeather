@@ -3,7 +3,7 @@ package com.github.handioq.weatherapp.saver;
 import android.os.Environment;
 
 import com.github.handioq.weatherapp.constants.PathConstants;
-import com.github.handioq.weatherapp.models.CurrentCityWeather;
+import com.github.handioq.weatherapp.models.CityWeather;
 
 import org.json.JSONObject;
 
@@ -12,32 +12,32 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CurrentCityWeatherSaver implements ISaver {
+public class CityWeatherSaver implements ISaver {
 
-    private CurrentCityWeather currentCityWeather;
+    private CityWeather cityWeather;
 
     //private final static String FILE_EXT = ".json";
 
-    public CurrentCityWeatherSaver() {
+    public CityWeatherSaver() {
     }
 
-    public CurrentCityWeatherSaver(CurrentCityWeatherSaveParams currentCityWeatherSaveParams) {
-        this.currentCityWeather = currentCityWeatherSaveParams.getCurrentCityWeather();
+    public CityWeatherSaver(CityWeatherSaveParams cityWeatherSaveParams) {
+        this.cityWeather = cityWeatherSaveParams.getCityWeather();
     }
 
     @Override
     public void Save() {
         File direct = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ PathConstants.APP_DIRECTORY);
-        String filename = currentCityWeather.getCityName() + "_" + currentCityWeather.getCountry() + PathConstants.JSON_DEFAULT_EXT;
+        String filename = cityWeather.getCityName() + "_" + cityWeather.getCountry() + PathConstants.JSON_DEFAULT_EXT;
         File file = new File(direct, filename);
 
         JSONObject obj = new JSONObject();
 
         try {
-            obj.put("name", currentCityWeather.getCityName());
-            obj.put("currentTemp", currentCityWeather.getCurrentTemp());
-            obj.put("iconID", currentCityWeather.getIconID());
-            obj.put("country", currentCityWeather.getCountry());
+            obj.put("name", cityWeather.getCityName());
+            obj.put("currentTemp", cityWeather.getCurrentTemp());
+            obj.put("iconID", cityWeather.getIconID());
+            obj.put("country", cityWeather.getCountry());
             // TODO: ADD LAST UPDATE TIME
         }
         catch (Exception e)

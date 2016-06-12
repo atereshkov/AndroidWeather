@@ -15,8 +15,7 @@ import android.view.MenuItem;
 
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.WeatherPagerAdapter;
-import com.github.handioq.weatherapp.models.AppWeatherClient;
-import com.survivingwithandroid.weather.lib.model.City;
+import com.github.handioq.weatherapp.client.AppWeatherClient;
 
 import java.util.List;
 import java.util.Vector;

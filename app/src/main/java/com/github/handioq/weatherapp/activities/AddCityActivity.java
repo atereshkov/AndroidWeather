@@ -14,9 +14,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.github.handioq.weatherapp.R;
-import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
 import com.github.handioq.weatherapp.adapters.CitySearchListAdapter;
-import com.github.handioq.weatherapp.models.AppWeatherClient;
+import com.github.handioq.weatherapp.client.AppWeatherClient;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;

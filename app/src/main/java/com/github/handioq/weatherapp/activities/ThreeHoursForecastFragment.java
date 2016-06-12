@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-import com.github.handioq.weatherapp.models.AppWeatherClient;
+import com.github.handioq.weatherapp.client.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.HourForecastExpListAdapter;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;

@@ -7,7 +7,7 @@ import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.model.City;
 import com.survivingwithandroid.weather.lib.model.CurrentWeather;
 
-public class CurrentCityWeather {
+public class CityWeather {
 
     private String cityName;
     private String country;
@@ -15,14 +15,14 @@ public class CurrentCityWeather {
     private String iconID;
     private Context ctx;
 
-    public CurrentCityWeather() {
+    public CityWeather() {
     }
 
-    public CurrentCityWeather(Context ctx) {
+    public CityWeather(Context ctx) {
         this.ctx = ctx;
     }
 
-    public CurrentCityWeather(String cityName, String country, float currentTemp, String iconID) {
+    public CityWeather(String cityName, String country, float currentTemp, String iconID) {
         this.cityName = cityName;
         this.country = country;
         this.currentTemp = currentTemp;

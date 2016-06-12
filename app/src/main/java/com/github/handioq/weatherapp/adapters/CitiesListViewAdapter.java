@@ -2,8 +2,6 @@ package com.github.handioq.weatherapp.adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.constants.PathConstants;
 import com.github.handioq.weatherapp.loader.CurrentCityWeatherLoadParams;
 import com.github.handioq.weatherapp.loader.CurrentCityWeatherLoader;
 import com.github.handioq.weatherapp.loader.ILoader;
-import com.github.handioq.weatherapp.models.CurrentCityWeather;
-import com.github.handioq.weatherapp.saver.CurrentCityWeatherSaveParams;
-import com.github.handioq.weatherapp.saver.CurrentCityWeatherSaver;
+import com.github.handioq.weatherapp.models.CityWeather;
+import com.github.handioq.weatherapp.saver.CityWeatherSaveParams;
+import com.github.handioq.weatherapp.saver.CityWeatherSaver;
 import com.github.handioq.weatherapp.saver.ISaver;
 import com.github.handioq.weatherapp.utils.IconUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
@@ -76,7 +71,7 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
         {
             final ImageView cityImage = (ImageView) view.findViewById(R.id.cityImage);
             final TextView cityTitle = (TextView) view.findViewById(R.id.cityTitle);
-            final TextView cityWeather = (TextView) view.findViewById(R.id.cityWeather);
+            final TextView cityWeatherInfo = (TextView) view.findViewById(R.id.cityWeather);
 
             final ImageLoader imageLoader = ImageLoader.getInstance();
 
@@ -93,13 +88,13 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
                             + context.getResources().getString(R.string.degree_celsius);
                     String title = String.format(res.getString(R.string.main_cities_listview_title), city.getName(), city.getCountry());
 
-                    cityWeather.setText(temp);
+                    cityWeatherInfo.setText(temp);
                     imageLoader.displayImage(IconUtils.getQueryImageURL(iconID), cityImage); // can be replaced for complete usage, if need it
                     cityTitle.setText(title);
 
-                    CurrentCityWeatherSaveParams currentCityWeatherSaveParams =
-                            new CurrentCityWeatherSaveParams(new CurrentCityWeather(city.getName(), city.getCountry(), currentTemp, iconID));
-                    ISaver toFileSaver = new CurrentCityWeatherSaver(currentCityWeatherSaveParams);
+                    CityWeatherSaveParams cityWeatherSaveParams =
+                            new CityWeatherSaveParams(new CityWeather(city.getName(), city.getCountry(), currentTemp, iconID));
+                    ISaver toFileSaver = new CityWeatherSaver(cityWeatherSaveParams);
                     toFileSaver.Save(); // save cities data to file for get it when no connection available
                     // transfer to new class (~ OfflineAppManager)
                 }
@@ -115,24 +110,22 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
                     // load city weather data from file
 
                     // TODO: MAKE SOME KIND OF CHECK FOR FIRST RUN WITHOUT INTERNET
-                    // IF CITIES IN EMPTY or... IF FILES WITH CITY NOT FOUND
-
-                    CurrentCityWeather currentCityWeather = new CurrentCityWeather(context);
+                    // IF CITIES IN EMPTY or... IF FILES WITH CITY NOT FOUND (+ OfflineAppManager)
 
                     CurrentCityWeatherLoadParams currentCityWeatherLoadParams =
                             new CurrentCityWeatherLoadParams(city.getName() + "_" + city.getCountry() + PathConstants.JSON_DEFAULT_EXT);
-                    ILoader<CurrentCityWeather> fromFileLoader = new CurrentCityWeatherLoader(currentCityWeatherLoadParams);
-                    currentCityWeather = fromFileLoader.load();
+                    ILoader<CityWeather> fromFileLoader = new CurrentCityWeatherLoader(currentCityWeatherLoadParams);
+                    CityWeather cityWeather = fromFileLoader.load();
 
-                    String temp = String.format(res.getString(R.string.temperature), Math.round(currentCityWeather.getCurrentTemp()))
+                    String temp = String.format(res.getString(R.string.temperature), Math.round(cityWeather.getCurrentTemp()))
                             + context.getResources().getString(R.string.degree_celsius);
                     String title = String.format(res.getString(R.string.main_cities_listview_title),
-                            currentCityWeather.getCityName(),
-                            currentCityWeather.getCountry());
+                            cityWeather.getCityName(),
+                            cityWeather.getCountry());
 
-                    cityWeather.setText(temp);
+                    cityWeatherInfo.setText(temp);
                     cityTitle.setText(title);
-                    cityImage.setImageDrawable(currentCityWeather.getIconFromDrawable(context));
+                    cityImage.setImageDrawable(cityWeather.getIconFromDrawable(context));
 
                 }
             });

@@ -1,4 +1,4 @@
-package com.github.handioq.weatherapp.models;
+package com.github.handioq.weatherapp.client;
 
 import android.content.Context;
 

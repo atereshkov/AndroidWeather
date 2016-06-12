@@ -23,7 +23,7 @@ import com.github.handioq.weatherapp.activities.CityWeatherActivity;
 import com.github.handioq.weatherapp.activities.SettingsActivity;
 import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
 import com.github.handioq.weatherapp.constants.KeyStore;
-import com.github.handioq.weatherapp.models.AppWeatherClient;
+import com.github.handioq.weatherapp.client.AppWeatherClient;
 import com.github.handioq.weatherapp.utils.AnimatingRefreshButtonManager;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

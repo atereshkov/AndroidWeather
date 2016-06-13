@@ -14,7 +14,7 @@ import com.github.handioq.weatherapp.client.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.DayForecastExpListAdapter;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
-import com.github.handioq.weatherapp.utils.DateUtils;
+import com.github.handioq.weatherapp.utils.DateTimeUtils;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
@@ -64,7 +64,7 @@ public class FiveDaysForecastFragment extends Fragment {
                     DayForecast dayForecast = forecast.getForecast(i);
                     long timestamp = forecast.getForecast(i).timestamp;
                     map = new HashMap<>();
-                    map.put(DateUtils.convertTimestampToDate(timestamp, "days"), dayForecast);
+                    map.put(DateTimeUtils.convertTimestampToDate(timestamp, "days"), dayForecast);
                     groupDataList.add(map);
                 }
 

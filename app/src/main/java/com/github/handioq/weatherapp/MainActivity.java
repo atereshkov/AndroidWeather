@@ -24,6 +24,7 @@ import com.github.handioq.weatherapp.activities.SettingsActivity;
 import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
 import com.github.handioq.weatherapp.constants.KeyStore;
 import com.github.handioq.weatherapp.client.AppWeatherClient;
+import com.github.handioq.weatherapp.navdrawer.CommandHandler;
 import com.github.handioq.weatherapp.utils.AnimatingRefreshButtonManager;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity
 
     private CitiesListViewAdapter citiesListViewAdapter;
     private AnimatingRefreshButtonManager mRefreshButtonManager;
+
+    private CommandHandler navCommandHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +133,8 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
+        navCommandHandler = new CommandHandler(this);
     }
 
     SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener(){
@@ -196,6 +201,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        /*
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -209,6 +215,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
+        */
+
+        navCommandHandler.handleRequest(item.getTitle().toString());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         assert drawer != null;

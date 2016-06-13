@@ -63,6 +63,13 @@
     <!-- Strings related to Remove City Dialog -->
     <string name="remove_question">Are you sure?</string>
 
+    <!-- Navigation drawer strings -->
+    <string name="nav_drawer_text">Have a nice day!</string>
+    <string name="nav_refresh_item">Refresh</string>
+    <string name="nav_settings_item">Settings</string>
+    <string name="nav_group1_title">Weather</string>
+    <string name="nav_group2_title">Weather</string>
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->

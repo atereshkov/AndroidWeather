@@ -9,8 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-
-public class DateUtils {
+public class DateTimeUtils {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM,yy");
     private static final DateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm:ss"); // HH:mm:ss z
@@ -41,8 +40,9 @@ public class DateUtils {
                formattedDate = TIMESTAMP_FORMAT_DAY.format(date);
            }
 
-
         return formattedDate;
     }
+
+
 
 }

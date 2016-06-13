@@ -14,7 +14,7 @@ import com.github.handioq.weatherapp.client.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.HourForecastExpListAdapter;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
-import com.github.handioq.weatherapp.utils.DateUtils;
+import com.github.handioq.weatherapp.utils.DateTimeUtils;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
@@ -68,7 +68,7 @@ public class ThreeHoursForecastFragment  extends Fragment {
                     Weather weather = weatherHourForecast.getHourForecast(i).weather;
                     long timestamp = weatherHourForecast.getHourForecast(i).timestamp;
                     map = new HashMap<>();
-                    map.put(DateUtils.convertTimestampToDate(timestamp, "hours"), weather);
+                    map.put(DateTimeUtils.convertTimestampToDate(timestamp, "hours"), weather);
                     groupDataList.add(map);
                 }
 

@@ -1,13 +1,13 @@
 package com.github.handioq.weatherapp.loader;
 
-public class CurrentCityWeatherLoadParams extends LoadParams {
+public class CityWeatherLoadParams extends LoadParams {
 
     private String filename;
 
-    public CurrentCityWeatherLoadParams() {
+    public CityWeatherLoadParams() {
     }
 
-    public CurrentCityWeatherLoadParams(String filename) {
+    public CityWeatherLoadParams(String filename) {
         this.filename = filename;
     }
 

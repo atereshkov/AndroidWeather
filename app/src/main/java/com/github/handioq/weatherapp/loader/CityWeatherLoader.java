@@ -5,17 +5,17 @@ import com.github.handioq.weatherapp.models.CityWeather;
 
 import org.json.JSONObject;
 
-public class CurrentCityWeatherLoader implements ILoader<CityWeather>{
+public class CityWeatherLoader implements ILoader<CityWeather>{
 
     private String filename;
 
-    public CurrentCityWeatherLoader() {
+    public CityWeatherLoader() {
 
     }
 
-    public CurrentCityWeatherLoader(CurrentCityWeatherLoadParams currentCityWeatherLoadParams)
+    public CityWeatherLoader(CityWeatherLoadParams cityWeatherLoadParams)
     {
-        this.filename = currentCityWeatherLoadParams.getFilename();
+        this.filename = cityWeatherLoadParams.getFilename();
     }
 
     @Override

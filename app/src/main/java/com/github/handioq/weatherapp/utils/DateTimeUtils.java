@@ -36,7 +36,7 @@ public class DateTimeUtils {
         else
            if (format.equals("days"))
            {
-               //sdf.setTimeZone(TimeZone.getTimeZone("GMT-0"));
+               //TIMESTAMP_FORMAT_DAY.setTimeZone(TimeZone.getTimeZone("GMT+3"));
                formattedDate = TIMESTAMP_FORMAT_DAY.format(date);
            }
 

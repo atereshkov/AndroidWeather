@@ -54,7 +54,7 @@
     <string name="day_temp_morning">Morning: %1$s</string>
     <string name="day_temp_day">Day: %1$s</string>
     <string name="day_temp_evening">Evening: %1$s</string>
-    <string name="day_temp_night">Night: %1$s</string>
+    <string name="day_temp_night">Night: %1$s°С</string>
 
     <!-- Strings related to Add City Dialog -->
     <string name="add_question">Add the selected city in the list?</string>
@@ -85,6 +85,7 @@
     <string name="pref_default_display_name">John Smith</string>
 
     <string name="pref_title_add_friends_to_messages">Units</string>
+    <string name="default_unit">°С</string>
     <string-array name="pref_units_list_titles">
         <item>°С</item>
         <item>°F</item>

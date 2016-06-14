@@ -128,7 +128,8 @@ public class CitiesListViewAdapter extends ArrayAdapter<City> {
                     else
                     {
                         temp = String.format(res.getString(R.string.temperature),
-                                Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(cityWeather.getCurrentTemp()))) + unit;
+                                Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(cityWeather.getCurrentTemp())))
+                                + unit;
                     }
                     String title = String.format(res.getString(R.string.main_cities_listview_title), cityWeather.getCityName(), cityWeather.getCountry());
 

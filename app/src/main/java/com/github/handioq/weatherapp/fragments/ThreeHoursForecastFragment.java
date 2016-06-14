@@ -1,4 +1,4 @@
-package com.github.handioq.weatherapp.activities;
+package com.github.handioq.weatherapp.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,14 +12,15 @@ import android.widget.Toast;
 
 import com.github.handioq.weatherapp.client.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
-import com.github.handioq.weatherapp.adapters.DayForecastExpListAdapter;
+import com.github.handioq.weatherapp.adapters.HourForecastExpListAdapter;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
 import com.github.handioq.weatherapp.utils.DateTimeUtils;
 import com.survivingwithandroid.weather.lib.WeatherClient;
 import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
 import com.survivingwithandroid.weather.lib.model.City;
-import com.survivingwithandroid.weather.lib.model.DayForecast;
-import com.survivingwithandroid.weather.lib.model.WeatherForecast;
+import com.survivingwithandroid.weather.lib.model.HourForecast;
+import com.survivingwithandroid.weather.lib.model.Weather;
+import com.survivingwithandroid.weather.lib.model.WeatherHourForecast;
 import com.survivingwithandroid.weather.lib.request.WeatherRequest;
 
 import java.util.ArrayList;
@@ -28,62 +29,62 @@ import java.util.List;
 import java.util.Map;
 
 
-public class FiveDaysForecastFragment extends Fragment {
+public class ThreeHoursForecastFragment  extends Fragment {
 
     AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();
     private City selectedCity;
 
-    private SwipeRefreshLayout swipeDayRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-    ExpandableListView expandableDayListView;
-    DayForecastExpListAdapter adapter;
+    ExpandableListView expandableListView;
+    HourForecastExpListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View V = inflater.inflate(R.layout.five_days_forecast_layout, container, false);
+        View V = inflater.inflate(R.layout.three_hour_forecast_layout, container, false);
 
         selectedCity = appWeatherClient.getSelectedCity();
         getActivity().setTitle(selectedCity.getName());
-        expandableDayListView = (ExpandableListView) V.findViewById(R.id.expandableDayListView);
+        expandableListView = (ExpandableListView) V.findViewById(R.id.expandableListView);
 
-        swipeDayRefreshLayout = (SwipeRefreshLayout) V.findViewById(R.id.swipeDayLayout); // TODO: reworking
-        swipeDayRefreshLayout.setOnRefreshListener(onRefreshListener);
+        swipeRefreshLayout = (SwipeRefreshLayout) V.findViewById(R.id.swipeHourLayout); // TODO: reworking
+        if (swipeRefreshLayout != null)
+        {
+            swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        }
 
-        appWeatherClient.getClient().getForecastWeather(new WeatherRequest(selectedCity.getId()), new WeatherClient.ForecastWeatherEventListener() {
-
+        appWeatherClient.getClient().getHourForecastWeather(new WeatherRequest(selectedCity.getId()), new WeatherClient.HourForecastWeatherEventListener()
+        {
             @Override
-            public void onWeatherRetrieved(WeatherForecast forecast) {
-                List dayForecastList = forecast.getForecast();
+            public void onWeatherRetrieved(WeatherHourForecast weatherHourForecast) {
+                List<HourForecast> hourList = weatherHourForecast.getHourForecast();
 
-                ArrayList<Map<String, DayForecast>> groupDataList = new ArrayList<>();
-                Map<String, DayForecast> map;
+                ArrayList<Map<String, Weather>> groupDataList = new ArrayList<>();
+                Map<String, Weather> map;
 
-                for (int i = 0; i < dayForecastList.size(); i++)
+                for (int i = 0; i < hourList.size(); i++)
                 {
-                    DayForecast dayForecast = forecast.getForecast(i);
-                    long timestamp = forecast.getForecast(i).timestamp;
+                    Weather weather = weatherHourForecast.getHourForecast(i).weather;
+                    long timestamp = weatherHourForecast.getHourForecast(i).timestamp;
                     map = new HashMap<>();
-                    map.put(DateTimeUtils.convertTimestampToDate(timestamp, "days"), dayForecast);
+                    map.put(DateTimeUtils.convertTimestampToDate(timestamp, "hours"), weather);
                     groupDataList.add(map);
                 }
 
-                adapter = new DayForecastExpListAdapter(getContext(), groupDataList);
-                expandableDayListView.setAdapter(adapter);
+                adapter = new HourForecastExpListAdapter(getContext(), groupDataList);
+                expandableListView.setAdapter(adapter);
             }
 
             @Override
-            public void onWeatherError(WeatherLibException t) {
-                t.printStackTrace();
+            public void onWeatherError(WeatherLibException e) {
+                e.printStackTrace();
             }
 
-            @Override
-            public void onConnectionError(Throwable t) {
-                t.printStackTrace();
+            @Override public void onConnectionError(Throwable throwable) {
+                throwable.printStackTrace();
             }
-
         });
-
 
         return V;
     }
@@ -102,7 +103,7 @@ public class FiveDaysForecastFragment extends Fragment {
 
                 @Override
                 public void run() {
-                    swipeDayRefreshLayout.setRefreshing(false);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
 
             }, 1000);
@@ -120,6 +121,5 @@ public class FiveDaysForecastFragment extends Fragment {
             adapter.notifyDataSetChanged();  // citiesListView will be updated
         }
     }
-
 
 }

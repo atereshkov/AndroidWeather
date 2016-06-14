@@ -6,4 +6,9 @@ public class MeasurementUnitsConverter {
     {
         return hPa / (float) 1.3332239;
     }
+
+    public static Float celsiusToFahrenheit(Float celsius)
+    {
+        return (celsius * (float) 1.8000) + 32;
+    }
 }

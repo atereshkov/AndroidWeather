@@ -1,7 +1,9 @@
-package com.github.handioq.weatherapp.activities;
+package com.github.handioq.weatherapp.fragments;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +35,8 @@ public class CurrentWeatherFragment extends Fragment {
     private TextView humidityTextView;
     private WeatherIconView weatherIcon;
 
+    private SharedPreferences sharedPrefs;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,8 +60,19 @@ public class CurrentWeatherFragment extends Fragment {
                 Log.d("CWF", "City ["+currentWeather.weather.location.getCity()+"] Current temp ["+currentTemp+"]");
 
                 Resources res = getActivity().getResources();
-                String temp = String.format(res.getString(R.string.temperature), Math.round(currentWeather.weather.temperature.getTemp()))
-                        + getActivity().getResources().getString(R.string.degree_celsius);
+                sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String unit = sharedPrefs.getString("units_list", res.getString(R.string.degree_celsius));
+
+                int degreeTemp;
+                if (unit.equals(res.getString(R.string.degree_celsius))) {
+                    degreeTemp = Math.round(currentTemp);
+                }
+                else {
+                    degreeTemp = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(currentTemp));
+                }
+
+                String temp = degreeTemp + unit;
+
                 String condition = String.format(res.getString(R.string.condition), currentWeather.weather.currentCondition.getCondition());
                 String conditionDescr = String.format(res.getString(R.string.condition_description), currentWeather.weather.currentCondition.getDescr());
                 String wind = String.format(res.getString(R.string.wind), Float.toString(currentWeather.weather.wind.getSpeed()))

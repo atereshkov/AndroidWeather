@@ -2,7 +2,9 @@ package com.github.handioq.weatherapp.adapters;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
 
     private ArrayList<Map<String, Weather>> weatherGroups;
     private Context mContext;
+
+    private SharedPreferences sharedPrefs;
 
     public HourForecastExpListAdapter(Context context, ArrayList<Map<String, Weather>> weatherGroups) {
         this.mContext = context;
@@ -73,15 +77,6 @@ public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.hour_forecast_group_view, null);
         }
 
-        /*
-        if (isExpanded){
-            // change something if group expanded
-        }
-        else
-        {
-            // otherwise
-        }*/
-
         TextView textGroup = (TextView) convertView.findViewById(R.id.textGroup);
         TextView textGroupInfo = (TextView) convertView.findViewById(R.id.textGroupInfo);
         TextView textGroupInfoCenter = (TextView) convertView.findViewById(R.id.textGroupInfoCenter);
@@ -92,10 +87,23 @@ public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
 
         List<Weather> weatherList = new ArrayList<Weather>(weatherGroups.get(groupPosition).values());
         Weather currentWeather = weatherList.get(0); // get weather for this time
-        String temperature = Math.round(currentWeather.temperature.getTemp()) + mContext.getResources().getString(R.string.degree_celsius);
-        String condition = currentWeather.currentCondition.getCondition();
 
         Resources res = mContext.getResources();
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String unit = sharedPrefs.getString("units_list", res.getString(R.string.degree_celsius));
+
+        int degreeTemp;
+
+        if (unit.equals(res.getString(R.string.degree_celsius))) {
+            degreeTemp = Math.round(currentWeather.temperature.getTemp());
+        }
+        else {
+            degreeTemp = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(currentWeather.temperature.getTemp()));
+        }
+
+        String temperature = degreeTemp + unit;
+        String condition = currentWeather.currentCondition.getCondition();
+
         String groupText = String.format(res.getString(R.string.hour_group_info_title), temperature);
         String groupTextCenter = String.format(res.getString(R.string.hour_group_info_center), condition);
         textGroupInfo.setText(groupText);
@@ -128,8 +136,19 @@ public class HourForecastExpListAdapter extends BaseExpandableListAdapter {
         Weather currentWeather = weatherList.get(0);
 
         Resources res = mContext.getResources();
-        String temp = String.format(res.getString(R.string.temperature), Math.round(currentWeather.temperature.getTemp()))
-                + mContext.getResources().getString(R.string.degree_celsius);
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String unit = sharedPrefs.getString("units_list", res.getString(R.string.degree_celsius));
+
+        int degreeTemp;
+
+        if (unit.equals(res.getString(R.string.degree_celsius))) {
+            degreeTemp = Math.round(currentWeather.temperature.getTemp());
+        }
+        else {
+            degreeTemp = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(currentWeather.temperature.getTemp()));
+        }
+
+        String temp = degreeTemp + unit;
         String condition = String.format(res.getString(R.string.condition), currentWeather.currentCondition.getCondition());
         String conditionDescr = String.format(res.getString(R.string.condition_description), currentWeather.currentCondition.getDescr());
         String wind = String.format(res.getString(R.string.wind), Float.toString(currentWeather.wind.getSpeed()))

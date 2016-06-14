@@ -19,6 +19,7 @@
 
     <!-- Strings related to notations -->
     <string name="degree_celsius">°С</string>
+    <string name="degree_fahrenheit">°F</string>
     <string name="percent">%</string>
     <string name="meters_per_second"> mps</string>
     <string name="mm_hg"> mm Hg</string>
@@ -50,10 +51,10 @@
     <string name="day_group_info_title_night">%1$s</string>
     <string name="day_group_info_title_day">%1$s</string>
     <string name="day_group_info_center">(%1$s)</string>
-    <string name="day_temp_morning">Morning: %1$s°С</string>
-    <string name="day_temp_day">Day: %1$s°С</string>
-    <string name="day_temp_evening">Evening: %1$s°С</string>
-    <string name="day_temp_night">Night: %1$s°С</string>
+    <string name="day_temp_morning">Morning: %1$s</string>
+    <string name="day_temp_day">Day: %1$s</string>
+    <string name="day_temp_evening">Evening: %1$s</string>
+    <string name="day_temp_night">Night: %1$s</string>
 
     <!-- Strings related to Add City Dialog -->
     <string name="add_question">Add the selected city in the list?</string>
@@ -83,20 +84,15 @@
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>
 
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
+    <string name="pref_title_add_friends_to_messages">Units</string>
+    <string-array name="pref_units_list_titles">
+        <item>°С</item>
+        <item>°F</item>
     </string-array>
 
+
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
+    <string name="pref_header_data_sync">Coming soon!</string>
 
     <string name="pref_title_sync_frequency">Sync frequency</string>
     <string-array name="pref_sync_frequency_titles">
@@ -119,7 +115,7 @@
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_header_notifications">Coming soon!</string>
 
     <string name="pref_title_new_message_notifications">New message notifications</string>
 

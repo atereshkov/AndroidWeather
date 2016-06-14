@@ -16,6 +16,9 @@ import android.view.MenuItem;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.WeatherPagerAdapter;
 import com.github.handioq.weatherapp.client.AppWeatherClient;
+import com.github.handioq.weatherapp.fragments.CurrentWeatherFragment;
+import com.github.handioq.weatherapp.fragments.FiveDaysForecastFragment;
+import com.github.handioq.weatherapp.fragments.ThreeHoursForecastFragment;
 
 import java.util.List;
 import java.util.Vector;

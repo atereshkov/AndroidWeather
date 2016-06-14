@@ -1,7 +1,9 @@
 package com.github.handioq.weatherapp.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ public class DayForecastExpListAdapter extends BaseExpandableListAdapter {
 
     private ArrayList<Map<String, DayForecast>> weatherGroups;
     private Context mContext;
+
+    private SharedPreferences sharedPrefs;
 
     public DayForecastExpListAdapter(Context context, ArrayList<Map<String, DayForecast>> weatherGroups) {
         this.mContext = context;
@@ -84,11 +88,26 @@ public class DayForecastExpListAdapter extends BaseExpandableListAdapter {
 
         List<DayForecast> weatherList = new ArrayList<>(weatherGroups.get(groupPosition).values());
         DayForecast currentDayForecast = weatherList.get(0); // get weather for this day
-        String nightTemp = Math.round(currentDayForecast.forecastTemp.night) + mContext.getResources().getString(R.string.degree_celsius);
-        String dayTemp = Math.round(currentDayForecast.forecastTemp.day) + mContext.getResources().getString(R.string.degree_celsius);
+        Resources res = mContext.getResources();
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String unit = sharedPrefs.getString("units_list", res.getString(R.string.degree_celsius));
+
+        int nightT;
+        int dayT;
+
+        if (unit.equals(res.getString(R.string.degree_celsius))) {
+            nightT = Math.round(currentDayForecast.forecastTemp.night);
+            dayT = Math.round(currentDayForecast.forecastTemp.day);
+        }
+        else {
+            nightT = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(currentDayForecast.forecastTemp.night));
+            dayT = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(currentDayForecast.forecastTemp.day));
+        }
+
+        String nightTemp = nightT + unit;
+        String dayTemp = dayT + unit;
         String condition = currentDayForecast.weather.currentCondition.getCondition();
 
-        Resources res = mContext.getResources();
         String groupTempDay = String.format(res.getString(R.string.day_group_info_title_day), dayTemp);
         String groupTempNight = String.format(res.getString(R.string.day_group_info_title_night), nightTemp);
         String groupText = String.format(res.getString(R.string.day_group_info_center), condition);
@@ -124,10 +143,30 @@ public class DayForecastExpListAdapter extends BaseExpandableListAdapter {
         DayForecast dayForecast = weatherList.get(0);
 
         Resources res = mContext.getResources();
-        String tempMorning = String.format(res.getString(R.string.day_temp_morning), Math.round(dayForecast.forecastTemp.morning));
-        String tempDay = String.format(res.getString(R.string.day_temp_day), Math.round(dayForecast.forecastTemp.day));
-        String tempEvening = String.format(res.getString(R.string.day_temp_evening), Math.round(dayForecast.forecastTemp.eve));
-        String tempNight = String.format(res.getString(R.string.day_temp_night), Math.round(dayForecast.forecastTemp.night));
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String unit = sharedPrefs.getString("units_list", res.getString(R.string.degree_celsius));
+
+        int morningTemp;
+        int dayTemp;
+        int eveTemp;
+        int nightTemp;
+        if (unit.equals(res.getString(R.string.degree_celsius))) {
+            morningTemp = Math.round(dayForecast.forecastTemp.morning);
+            dayTemp = Math.round(dayForecast.forecastTemp.day);
+            eveTemp = Math.round(dayForecast.forecastTemp.eve);
+            nightTemp = Math.round(dayForecast.forecastTemp.night);
+        }
+        else {
+            morningTemp = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(dayForecast.forecastTemp.morning));
+            dayTemp = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(dayForecast.forecastTemp.day));
+            eveTemp = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(dayForecast.forecastTemp.eve));
+            nightTemp = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(dayForecast.forecastTemp.night));
+        }
+
+        String tempMorning = String.format(res.getString(R.string.day_temp_morning), morningTemp) + unit;
+        String tempDay = String.format(res.getString(R.string.day_temp_day), dayTemp) + unit;
+        String tempEvening = String.format(res.getString(R.string.day_temp_evening), eveTemp) + unit;
+        String tempNight = String.format(res.getString(R.string.day_temp_night), nightTemp) + unit;
 
         tempMornView.setText(tempMorning);
         tempDayView.setText(tempDay);

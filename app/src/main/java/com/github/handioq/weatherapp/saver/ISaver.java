@@ -2,6 +2,6 @@ package com.github.handioq.weatherapp.saver;
 
 public interface ISaver {
 
-    void Save();
+    void save();
 
 }

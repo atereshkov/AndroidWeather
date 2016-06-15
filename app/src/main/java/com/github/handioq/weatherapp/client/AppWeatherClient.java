@@ -109,7 +109,7 @@ public class AppWeatherClient {
     {
         JsonSaveParams jsonSaveParams = new JsonSaveParams(PathConstants.CITIES_FILE_NAME, cities);
         ISaver toFileSaver = new JsonFileSaver(jsonSaveParams);
-        toFileSaver.Save();
+        toFileSaver.save();
     }
 
     public void loadCities()

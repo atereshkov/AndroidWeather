@@ -16,17 +16,15 @@ public class CityWeatherSaver implements ISaver {
 
     private CityWeather cityWeather;
 
-    //private final static String FILE_EXT = ".json";
-
     public CityWeatherSaver() {
     }
 
-    public CityWeatherSaver(CityWeatherSaveParams cityWeatherSaveParams) {
-        this.cityWeather = cityWeatherSaveParams.getCityWeather();
+    public CityWeatherSaver(CityWeather cityWeather) {
+        this.cityWeather = cityWeather;
     }
 
     @Override
-    public void Save() {
+    public void save() {
         File direct = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ PathConstants.APP_DIRECTORY);
         String filename = cityWeather.getCityName() + "_" + cityWeather.getCountry() + PathConstants.JSON_DEFAULT_EXT;
         File file = new File(direct, filename);

@@ -21,27 +21,33 @@ public class IconUtils {
     public static String getIconResource(Context ctx, int weatherID, String iconID)
     {
         String uri = "";
+        String resultResource = "";
         int imageResource = 0;
-        iconID = String.valueOf(iconID.charAt(iconID.length() - 1));
 
-        if (iconID.equals("d")) // if day
+        if (iconID != null)
         {
-            uri = "wi_owm_" + weatherID;
-        }
-        else
-        {
-            uri = "wi_owm_day_" + weatherID;
+            iconID = String.valueOf(iconID.charAt(iconID.length() - 1));
+
+            if (iconID.equals("d")) // if day
+            {
+                uri = "wi_owm_" + weatherID;
+            }
+            else
+            {
+                uri = "wi_owm_day_" + weatherID;
+            }
         }
 
         try {
             imageResource = ctx.getResources().getIdentifier(uri, "string", ctx.getPackageName());
+            resultResource = ctx.getString(imageResource);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
 
-        return ctx.getString(imageResource);
+        return resultResource;
     }
 
     public static String getQueryImageURL(String icon) {

@@ -14,14 +14,7 @@ import android.widget.TextView;
 
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.client.OfflineWeatherClient;
-import com.github.handioq.weatherapp.constants.PathConstants;
-import com.github.handioq.weatherapp.loader.CityWeatherLoadParams;
-import com.github.handioq.weatherapp.loader.CityWeatherLoader;
-import com.github.handioq.weatherapp.loader.ILoader;
 import com.github.handioq.weatherapp.models.CityWeather;
-import com.github.handioq.weatherapp.saver.CityWeatherSaveParams;
-import com.github.handioq.weatherapp.saver.CityWeatherSaver;
-import com.github.handioq.weatherapp.saver.ISaver;
 import com.github.handioq.weatherapp.utils.IconUtils;
 import com.github.handioq.weatherapp.utils.MeasurementUnitsConverter;
 import com.nostra13.universalimageloader.core.ImageLoader;

@@ -30,7 +30,7 @@ public class JsonFileSaver implements ISaver{
     }
 
     @Override
-    public void Save() {
+    public void save() {
         File direct = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ PathConstants.APP_DIRECTORY);
         File file = new File(direct, filename);
 

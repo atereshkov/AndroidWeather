@@ -54,7 +54,8 @@ public class AddCityActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 //if (count > 3)
-                appWeatherClient.getClient().searchCity(s.toString(), new WeatherClient.CityEventListener() {
+                String searchText = s.toString().replaceAll("\\s+","");
+                appWeatherClient.getClient().searchCity(searchText, new WeatherClient.CityEventListener() {
                     @Override
                     public void onCityListRetrieved(List<City> cityList) {
                         if (!cityList.isEmpty())

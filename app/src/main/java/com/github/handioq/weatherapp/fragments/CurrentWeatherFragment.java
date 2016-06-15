@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import com.github.handioq.weatherapp.client.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
+import com.github.handioq.weatherapp.client.OfflineWeatherClient;
+import com.github.handioq.weatherapp.models.Condition;
+import com.github.handioq.weatherapp.models.Location;
+import com.github.handioq.weatherapp.models.Temperature;
 import com.github.handioq.weatherapp.utils.IconUtils;
 import com.github.handioq.weatherapp.utils.MeasurementUnitsConverter;
 import com.github.pwittchen.weathericonview.WeatherIconView;
@@ -36,6 +40,7 @@ public class CurrentWeatherFragment extends Fragment {
     private WeatherIconView weatherIcon;
 
     private SharedPreferences sharedPrefs;
+    private OfflineWeatherClient offlineWeatherClient = new OfflineWeatherClient();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +62,14 @@ public class CurrentWeatherFragment extends Fragment {
         appWeatherClient.getClient().getCurrentCondition(new WeatherRequest(selectedCity.getId()), new WeatherClient.WeatherEventListener() {
             @Override public void onWeatherRetrieved(CurrentWeather currentWeather) {
                 float currentTemp = currentWeather.weather.temperature.getTemp();
+                String cond = currentWeather.weather.currentCondition.getCondition();
+                String condDescription = currentWeather.weather.currentCondition.getDescr();
+                int weatherID = currentWeather.weather.currentCondition.getWeatherId();
+                String iconID = currentWeather.weather.currentCondition.getIcon();
+                float windSpeed = currentWeather.weather.wind.getSpeed();
+                float humid = currentWeather.weather.currentCondition.getHumidity();
+                float press = currentWeather.weather.currentCondition.getPressure();
+
                 Log.d("CWF", "City ["+currentWeather.weather.location.getCity()+"] Current temp ["+currentTemp+"]");
 
                 Resources res = getActivity().getResources();
@@ -73,13 +86,13 @@ public class CurrentWeatherFragment extends Fragment {
 
                 String temp = degreeTemp + unit;
 
-                String condition = String.format(res.getString(R.string.condition), currentWeather.weather.currentCondition.getCondition());
-                String conditionDescr = String.format(res.getString(R.string.condition_description), currentWeather.weather.currentCondition.getDescr());
-                String wind = String.format(res.getString(R.string.wind), Float.toString(currentWeather.weather.wind.getSpeed()))
+                String condition = String.format(res.getString(R.string.condition), cond);
+                String conditionDescr = String.format(res.getString(R.string.condition_description), condDescription);
+                String wind = String.format(res.getString(R.string.wind), Float.toString(windSpeed))
                         + getActivity().getResources().getString(R.string.meters_per_second);
-                String pressure = String.format(res.getString(R.string.pressure), Float.toString(currentWeather.weather.currentCondition.getHumidity()))
+                String pressure = String.format(res.getString(R.string.pressure), Float.toString(humid))
                         +  getActivity().getResources().getString(R.string.percent);
-                String humidity = String.format(res.getString(R.string.humidity), Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(currentWeather.weather.currentCondition.getPressure()))))
+                String humidity = String.format(res.getString(R.string.humidity), Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(press))))
                         + getActivity().getResources().getString(R.string.mm_hg);
 
                 tempTextView.setText(temp);
@@ -90,10 +103,16 @@ public class CurrentWeatherFragment extends Fragment {
                 condDescrTextView.setText(condition);
                 condTextView.setText(conditionDescr);
 
-                weatherIcon.setIconResource(IconUtils.getIconResource(getActivity(), currentWeather.weather.currentCondition.getWeatherId(), currentWeather.weather.currentCondition.getIcon()));
-                //weatherIcon.setIconResource(getString(R.string.wi_day_sunny_overcast));
-                //weatherIcon.setIconSize(100);
-                //weatherIcon.setIconColor(Color.BLACK);
+                weatherIcon.setIconResource(IconUtils.getIconResource(getActivity(), weatherID, iconID));
+
+                Condition conditionToSave = new Condition(condition, condDescription, windSpeed, press, humid);
+                Location locationToSave = new Location(selectedCity.getName(), selectedCity.getCountry());
+
+                Temperature temperatureToSave = new Temperature(currentTemp);
+
+                com.github.handioq.weatherapp.models.CurrentWeather currWeather =
+                        new com.github.handioq.weatherapp.models.CurrentWeather(conditionToSave, locationToSave, temperatureToSave, iconID, weatherID);
+                offlineWeatherClient.saveCurrentWeather(currWeather); // save current weather to file
             }
 
             @Override public void onWeatherError(WeatherLibException e) {
@@ -104,6 +123,52 @@ public class CurrentWeatherFragment extends Fragment {
             @Override public void onConnectionError(Throwable throwable) {
                 Log.d("WL", "Connection error");
                 throwable.printStackTrace();
+
+                com.github.handioq.weatherapp.models.CurrentWeather currentWeather = offlineWeatherClient.loadCurrentWeather(selectedCity);
+
+                float currentTemp = currentWeather.getTemperature().getTemp();
+                String cond = currentWeather.getCondition().getCondition();
+                String condDescription = currentWeather.getCondition().getConditionDescription();
+                int weatherID = currentWeather.getWeatherID();
+                String iconID = currentWeather.getIconID();
+                float windSpeed = currentWeather.getCondition().getWindSpeed();
+                float humid = currentWeather.getCondition().getHumidity();
+                float press = currentWeather.getCondition().getPressure();
+
+                Log.d("CWF_OFFLINE", "City ["+selectedCity.getName()+"] Current temp ["+currentTemp+"]");
+
+                Resources res = getActivity().getResources();
+                sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String unit = sharedPrefs.getString("units_list", res.getString(R.string.degree_celsius));
+
+                int degreeTemp;
+                if (unit.equals(res.getString(R.string.degree_celsius))) {
+                    degreeTemp = Math.round(currentTemp);
+                }
+                else {
+                    degreeTemp = Math.round(MeasurementUnitsConverter.celsiusToFahrenheit(currentTemp));
+                }
+
+                String temp = degreeTemp + unit;
+
+                String condition = String.format(res.getString(R.string.condition), cond);
+                String conditionDescr = String.format(res.getString(R.string.condition_description), condDescription);
+                String wind = String.format(res.getString(R.string.wind), Float.toString(windSpeed))
+                        + getActivity().getResources().getString(R.string.meters_per_second);
+                String pressure = String.format(res.getString(R.string.pressure), Float.toString(humid))
+                        +  getActivity().getResources().getString(R.string.percent);
+                String humidity = String.format(res.getString(R.string.humidity), Float.toString(Math.round(MeasurementUnitsConverter.hpaToMmHg(press))))
+                        + getActivity().getResources().getString(R.string.mm_hg);
+
+                tempTextView.setText(temp);
+                windSpeedTextView.setText(wind);
+                pressureTextView.setText(pressure);
+                humidityTextView.setText(humidity);
+
+                condDescrTextView.setText(condition);
+                condTextView.setText(conditionDescr);
+
+                weatherIcon.setIconResource(IconUtils.getIconResource(getActivity(), weatherID, iconID));
             }
         });
 

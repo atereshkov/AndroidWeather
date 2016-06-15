@@ -13,13 +13,8 @@ public class CityWeather {
     private String country;
     private float currentTemp;
     private String iconID;
-    private Context ctx;
 
     public CityWeather() {
-    }
-
-    public CityWeather(Context ctx) {
-        this.ctx = ctx;
     }
 
     public CityWeather(String cityName, String country, float currentTemp, String iconID) {

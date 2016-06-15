@@ -17,9 +17,11 @@
         android:icon="@mipmap/ic_delete_white_24dp"
         android:title="Delete"/>
 
+    <!--
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    -->
 </menu>

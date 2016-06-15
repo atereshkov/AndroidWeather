@@ -22,7 +22,7 @@ import com.survivingwithandroid.weather.lib.model.City;
 
 import java.util.List;
 
-public class AddCityActivity extends AppCompatActivity { // TODO: IMPLEMENT INTERNET CONNECTION CHECKING
+public class AddCityActivity extends AppCompatActivity {
 
     private EditText cityEditText;
     private ListView citySearchListView;

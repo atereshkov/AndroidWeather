@@ -1,4 +1,4 @@
-package com.github.handioq.weatherapp;
+package com.github.handioq.weatherapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.github.handioq.weatherapp.activities.AddCityActivity;
-import com.github.handioq.weatherapp.activities.CityWeatherActivity;
-import com.github.handioq.weatherapp.activities.SettingsActivity;
+import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.CitiesListViewAdapter;
 import com.github.handioq.weatherapp.constants.KeyStore;
 import com.github.handioq.weatherapp.client.AppWeatherClient;

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.handioq.weatherapp.client.AppWeatherClient;
@@ -39,6 +40,8 @@ public class ThreeHoursForecastFragment  extends Fragment {
     ExpandableListView expandableListView;
     HourForecastExpListAdapter adapter;
 
+    private TextView errorTextView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,11 +57,16 @@ public class ThreeHoursForecastFragment  extends Fragment {
             swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         }
 
+        errorTextView = (TextView) V.findViewById(R.id.errorTextView);
+
         appWeatherClient.getClient().getHourForecastWeather(new WeatherRequest(selectedCity.getId()), new WeatherClient.HourForecastWeatherEventListener()
         {
             @Override
             public void onWeatherRetrieved(WeatherHourForecast weatherHourForecast) {
                 List<HourForecast> hourList = weatherHourForecast.getHourForecast();
+
+                if (errorTextView != null)
+                    errorTextView.setVisibility(View.GONE);
 
                 ArrayList<Map<String, Weather>> groupDataList = new ArrayList<>();
                 Map<String, Weather> map;
@@ -83,6 +91,9 @@ public class ThreeHoursForecastFragment  extends Fragment {
 
             @Override public void onConnectionError(Throwable throwable) {
                 throwable.printStackTrace();
+
+                if (errorTextView != null)
+                    errorTextView.setVisibility(View.VISIBLE);
             }
         });
 

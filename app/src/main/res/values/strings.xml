@@ -41,6 +41,7 @@
     <string name="dayly_forecast">5 day weather forecast with daily data.</string>
 
     <string name="refresh_error_nointernet">Error updating. Verify your connection to the Internet!</string>
+    <string name="forecast_nointernet">Connect to the Internet to get the forecast.</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to HourForecastAdapter and View -->

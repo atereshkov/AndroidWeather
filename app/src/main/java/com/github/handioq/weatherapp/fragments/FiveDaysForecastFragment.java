@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.handioq.weatherapp.client.AppWeatherClient;
 import com.github.handioq.weatherapp.R;
 import com.github.handioq.weatherapp.adapters.DayForecastExpListAdapter;
+import com.github.handioq.weatherapp.utils.AnimatingRefreshButtonManager;
 import com.github.handioq.weatherapp.utils.ConnectionDetector;
 import com.github.handioq.weatherapp.utils.DateTimeUtils;
 import com.survivingwithandroid.weather.lib.WeatherClient;
@@ -34,9 +36,12 @@ public class FiveDaysForecastFragment extends Fragment {
     private City selectedCity;
 
     private SwipeRefreshLayout swipeDayRefreshLayout;
+    private AnimatingRefreshButtonManager mRefreshButtonManager;
 
     ExpandableListView expandableDayListView;
     DayForecastExpListAdapter adapter;
+
+    private TextView errorTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,10 +55,15 @@ public class FiveDaysForecastFragment extends Fragment {
         swipeDayRefreshLayout = (SwipeRefreshLayout) V.findViewById(R.id.swipeDayLayout); // TODO: reworking
         swipeDayRefreshLayout.setOnRefreshListener(onRefreshListener);
 
+        errorTextView = (TextView) V.findViewById(R.id.errorTextView);
+
         appWeatherClient.getClient().getForecastWeather(new WeatherRequest(selectedCity.getId()), new WeatherClient.ForecastWeatherEventListener() {
 
             @Override
             public void onWeatherRetrieved(WeatherForecast forecast) {
+                if (errorTextView != null)
+                    errorTextView.setVisibility(View.GONE);
+
                 List dayForecastList = forecast.getForecast();
 
                 ArrayList<Map<String, DayForecast>> groupDataList = new ArrayList<>();
@@ -80,6 +90,9 @@ public class FiveDaysForecastFragment extends Fragment {
             @Override
             public void onConnectionError(Throwable t) {
                 t.printStackTrace();
+
+                if (errorTextView != null)
+                    errorTextView.setVisibility(View.VISIBLE);
             }
 
         });
@@ -93,9 +106,7 @@ public class FiveDaysForecastFragment extends Fragment {
         @Override
         public void onRefresh() {
 
-            //mRefreshButtonManager.onRefreshBeginning();
             refreshCitiesListView();
-            //mRefreshButtonManager.onRefreshComplete();
 
             //simulate doing update for 1000 ms
             new Handler().postDelayed(new Runnable() {

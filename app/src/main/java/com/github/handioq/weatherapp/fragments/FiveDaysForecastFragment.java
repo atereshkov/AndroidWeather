@@ -56,6 +56,8 @@ public class FiveDaysForecastFragment extends Fragment {
         swipeDayRefreshLayout.setOnRefreshListener(onRefreshListener);
 
         errorTextView = (TextView) V.findViewById(R.id.errorTextView);
+        if (errorTextView != null)
+            errorTextView.setVisibility(View.INVISIBLE);
 
         appWeatherClient.getClient().getForecastWeather(new WeatherRequest(selectedCity.getId()), new WeatherClient.ForecastWeatherEventListener() {
 

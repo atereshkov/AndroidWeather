@@ -57,7 +57,9 @@ public class ThreeHoursForecastFragment  extends Fragment {
             swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         }
 
-        errorTextView = (TextView) V.findViewById(R.id.errorTextView);
+        errorTextView = (TextView) V.findViewById(R.id.errorTextView3);
+        if (errorTextView != null)
+            errorTextView.setVisibility(View.INVISIBLE);
 
         appWeatherClient.getClient().getHourForecastWeather(new WeatherRequest(selectedCity.getId()), new WeatherClient.HourForecastWeatherEventListener()
         {

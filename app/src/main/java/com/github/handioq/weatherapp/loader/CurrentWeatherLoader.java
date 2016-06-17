@@ -8,6 +8,10 @@ import com.github.handioq.weatherapp.models.Temperature;
 
 import org.json.JSONObject;
 
+/**
+ * Class to parse CurrentWeather from a JSON file
+ * @see CurrentWeather
+ */
 public class CurrentWeatherLoader implements ILoader<CurrentWeather>{
 
     private String filename;

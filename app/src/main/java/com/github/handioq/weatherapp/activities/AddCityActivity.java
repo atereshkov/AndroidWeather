@@ -22,6 +22,9 @@ import com.survivingwithandroid.weather.lib.model.City;
 
 import java.util.List;
 
+/**
+ * Activity for adding the city.
+ */
 public class AddCityActivity extends AppCompatActivity {
 
     private EditText cityEditText;

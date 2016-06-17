@@ -1,6 +1,9 @@
 package com.github.handioq.weatherapp.loader;
 
-public abstract  class LoadParams {
+/**
+ * Abstract class load params for loader params
+ */
+public abstract class LoadParams {
 
     public LoadParams() {
     }

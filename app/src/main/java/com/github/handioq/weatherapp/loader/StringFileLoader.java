@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Class for load from file data and return it in String format
+ */
 public class StringFileLoader implements ILoader<String> {
 
     private String filename;

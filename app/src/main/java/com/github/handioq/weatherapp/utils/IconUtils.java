@@ -3,6 +3,9 @@ package com.github.handioq.weatherapp.utils;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+/**
+ * Class for getting icons from drawable and from resources
+ */
 public class IconUtils {
 
     private static String IMG_URL = "http://openweathermap.org/img/w/";

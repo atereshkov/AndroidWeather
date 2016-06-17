@@ -1,5 +1,8 @@
 package com.github.handioq.weatherapp.loader;
 
+/**
+ * Load params for json loader
+ */
 public class JsonLoadParams extends LoadParams {
 
     private String filename;

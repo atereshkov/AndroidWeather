@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for load and parse data from json file and return city list.
+ */
 public class JsonFileLoader implements ILoader<List<City>> {
 
     private String filename;

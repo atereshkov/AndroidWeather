@@ -26,6 +26,9 @@ import com.survivingwithandroid.weather.lib.request.WeatherRequest;
 
 import java.util.List;
 
+/**
+ * Adapter for City list
+ */
 public class CitiesListViewAdapter extends ArrayAdapter<City> {
 
     private List<City> items;

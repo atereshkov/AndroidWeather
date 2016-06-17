@@ -29,7 +29,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Fragment for three hours forecast weather with ExandableListView.
+ */
 public class ThreeHoursForecastFragment  extends Fragment {
 
     AppWeatherClient appWeatherClient = AppWeatherClient.getInstance();

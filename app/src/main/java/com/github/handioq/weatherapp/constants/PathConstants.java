@@ -1,5 +1,8 @@
 package com.github.handioq.weatherapp.constants;
 
+/**
+ * Class for constant strings of directories, exts and paths.
+ */
 public class PathConstants {
 
     public final static String APP_DIRECTORY = "/AndroidWeather/";

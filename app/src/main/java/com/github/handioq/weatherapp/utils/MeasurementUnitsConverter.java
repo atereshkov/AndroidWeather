@@ -1,5 +1,8 @@
 package com.github.handioq.weatherapp.utils;
 
+/**
+ * Class for measurement conversion
+ */
 public class MeasurementUnitsConverter {
 
     public static Float hpaToMmHg(Float hPa)

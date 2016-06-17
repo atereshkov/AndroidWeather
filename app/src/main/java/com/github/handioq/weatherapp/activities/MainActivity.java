@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
                     Intent addCityIntent = new Intent(MainActivity.this, AddCityActivity.class);
                     startActivity(addCityIntent);
                 }
@@ -123,8 +121,6 @@ public class MainActivity extends AppCompatActivity
         citiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                //Toast.makeText(getActivity(), parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-
                 Intent selectedCityIntent = new Intent(MainActivity.this, CityWeatherActivity.class);
                 startActivity(selectedCityIntent);
                 appWeatherClient.setSelectedCity(appWeatherClient.getCities().get(position));

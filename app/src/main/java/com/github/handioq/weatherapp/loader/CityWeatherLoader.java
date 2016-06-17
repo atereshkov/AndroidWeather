@@ -5,6 +5,10 @@ import com.github.handioq.weatherapp.models.CityWeather;
 
 import org.json.JSONObject;
 
+/**
+ * Class to parse CityWeather from a JSON file
+ * @see CityWeather
+ */
 public class CityWeatherLoader implements ILoader<CityWeather>{
 
     private String filename;

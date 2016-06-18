@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+/**
+ * Class for detect device connections.
+ */
 public class ConnectionDetector {
 
     private Context context;

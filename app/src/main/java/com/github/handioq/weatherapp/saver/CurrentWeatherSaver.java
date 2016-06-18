@@ -13,6 +13,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Class for saving CurrentWeather to file.
+ * @see CurrentWeather
+ */
 public class CurrentWeatherSaver implements ISaver {
 
     private CurrentWeather currentWeather;

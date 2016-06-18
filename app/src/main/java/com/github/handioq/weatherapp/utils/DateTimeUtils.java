@@ -9,6 +9,9 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+/**
+ * Class store the date time utils.
+ */
 public class DateTimeUtils {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM,yy");
@@ -23,6 +26,12 @@ public class DateTimeUtils {
         return DATE_FORMAT.format(tempcal.getTime());
     }
 
+    /**
+     * Convert from UTC timestamp to date with constant format.
+     * @param timestamp UTC timestamp
+     * @param format days or hours format
+     * @return String date
+     */
     public static String convertTimestampToDate(long timestamp, String format)
     {
         String formattedDate = "";

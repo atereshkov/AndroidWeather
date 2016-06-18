@@ -12,6 +12,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Class for saving CityWeather to JSON file.
+ * @see CityWeather
+ */
 public class CityWeatherSaver implements ISaver {
 
     private CityWeather cityWeather;

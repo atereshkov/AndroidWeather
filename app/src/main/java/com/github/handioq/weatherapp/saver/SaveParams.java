@@ -4,6 +4,9 @@ import com.survivingwithandroid.weather.lib.model.City;
 
 import java.util.List;
 
+/**
+ * Abstract class for save params.
+ */
 public abstract class SaveParams {
 
     private String filename;

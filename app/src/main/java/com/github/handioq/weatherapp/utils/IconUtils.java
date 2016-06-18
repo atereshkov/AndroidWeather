@@ -21,6 +21,13 @@ public class IconUtils {
         return image;
     }
 
+    /**
+     * Get icon from resource for specific weather ID and icon ID.
+     * @param ctx Context
+     * @param weatherID
+     * @param iconID
+     * @return String
+     */
     public static String getIconResource(Context ctx, int weatherID, String iconID)
     {
         String uri = "";

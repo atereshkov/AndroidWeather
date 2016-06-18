@@ -19,6 +19,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * Class for saving cities to JSON file.
+ * @see City
+ */
 public class JsonFileSaver implements ISaver{
 
     private String filename;
@@ -75,6 +79,10 @@ public class JsonFileSaver implements ISaver{
         }
     }
 
+    /**
+     * Make an empty file.
+     * @param filename
+     */
     private void createDefaultBase(String filename)
     {
         File direct = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ PathConstants.APP_DIRECTORY);

@@ -5,6 +5,9 @@ import android.content.Intent;
 
 import com.github.handioq.weatherapp.activities.SettingsActivity;
 
+/**
+ * Class for execute settings command.
+ */
 public class SettingsCommand implements ICommand {
 
     private Context context;

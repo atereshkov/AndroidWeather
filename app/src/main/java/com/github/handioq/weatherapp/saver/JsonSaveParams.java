@@ -4,6 +4,9 @@ import com.survivingwithandroid.weather.lib.model.City;
 
 import java.util.List;
 
+/**
+ * Json save params.
+ */
 public class JsonSaveParams extends SaveParams{
 
     public JsonSaveParams() {

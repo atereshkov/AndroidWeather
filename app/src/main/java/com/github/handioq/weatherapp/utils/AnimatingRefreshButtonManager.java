@@ -9,6 +9,9 @@ import android.view.animation.AnimationUtils;
 
 import com.github.handioq.weatherapp.R;
 
+/**
+ * Class for animating refresh button.
+ */
 public class AnimatingRefreshButtonManager {
 
     private final MenuItem mRefreshItem;
